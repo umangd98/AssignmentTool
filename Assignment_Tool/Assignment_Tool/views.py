@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login
+from .decorators import unauthenticated_user
 
-
+@unauthenticated_user
 def login_user(request):
   if request.method == 'POST':
     form = LoginForm(request.POST)
@@ -13,7 +14,8 @@ def login_user(request):
       if user is not None:
         login(request, user)
         # return HttpResponse('Auth is successful')
-        return render(request, 'home.html')
+        if user.instructor is not None:
+          return render(request, 'home.html', {'bio':user.instructor.bio})
       else:
         return HttpResponse('Auth failed. Please check credentials')
   
