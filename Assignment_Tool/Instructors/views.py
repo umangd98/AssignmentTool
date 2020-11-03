@@ -1,11 +1,14 @@
 from django.shortcuts import render
-from .forms import InstructorRegisterForm
+from .forms import InstructorRegisterForm, UserUpdateForm
 from Assignment_Tool.forms import CreateUserForm
 from django.http import HttpResponse
 from Assignment_Tool.decorators import unauthenticated_user
 from django.contrib.auth.models import Group
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+def home(request):
+  return render(request, 'home_instructor.html')
+
 
 @unauthenticated_user
 def instructor_register(request):
@@ -14,7 +17,6 @@ def instructor_register(request):
     form_instructor = InstructorRegisterForm(request.POST)
     if form_user.is_valid() and form_instructor.is_valid():
       user = form_user.save()
-      # user = authenticate(request, username=cd['username'], password=cd['password'])
       if user is not None:
         instructor = form_instructor.save(commit=False)
         instructor.user = user
@@ -30,4 +32,18 @@ def instructor_register(request):
     form2 = InstructorRegisterForm()
 
   return render(request, 'register.html', {'form1':form1, 'form2':form2})
-  
+
+@login_required(login_url='/login/')
+def instructor_update(request):
+  if request.method == 'POST':
+    form_user = UserUpdateForm(request.POST, instance=request.user)
+    form_instructor = InstructorRegisterForm(request.POST, request.FILES, instance=request.user.instructor)
+    if form_user.is_valid() and form_instructor.is_valid():
+      user = form_user.save()
+      instructor = form_instructor.save()
+      return HttpResponse('Instructor save is successful')
+  else:
+    form1 = UserUpdateForm(instance=request.user)
+    form2 = InstructorRegisterForm(instance=request.user.instructor)
+
+  return render(request, 'register.html', {'form1':form1, 'form2':form2, 'title': 'Update'})

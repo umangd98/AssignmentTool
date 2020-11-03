@@ -4,15 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    {% if title %}
+    <title>Update</title>
+    {% else %}
     <title>Register</title>
+
+    {% endif %}
   </head>
   <body>
+    {% if title %}
+    <h3>User Update Form</h3>
+    {% else %}
     <h3>Register Instructor Form</h3>
-    <form action="" method="post">
+    {% endif %}
+
+    <form action="" method="post" enctype="multipart/form-data">
       {% csrf_token %} {{form1.as_p}} <br />
       {{form2.as_p}}
       <br />
-      <button type="submit">Login</button>
+      <button type="submit">Register</button>
     </form>
   </body>
 </html>

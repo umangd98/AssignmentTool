@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login
 from .decorators import unauthenticated_user
+
 
 @unauthenticated_user
 def login_user(request):
@@ -15,7 +16,9 @@ def login_user(request):
         login(request, user)
         # return HttpResponse('Auth is successful')
         if user.instructor is not None:
-          return render(request, 'home.html', {'bio':user.instructor.bio})
+          # return instructor_update(request)
+          return redirect('/instructor/')
+          # return render(request, 'home.html', {'bio':user.instructor.bio})
       else:
         return HttpResponse('Auth failed. Please check credentials')
   

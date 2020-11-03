@@ -5,27 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Home</title>
+
+    <style>
+      .profile-pic {
+        max-width: 200px;
+        max-height: 200px;
+        margin: 0 auto;
+        border-radius: 50%;
+        border: 1px solid black;
+      }
+    </style>
   </head>
   <body>
     <h1>Assignment Tool</h1>
     {% if user.is_authenticated %}
     <h1>Welcome {{user.username}}</h1>
+    {% if request.user.instructor.profile_pic %}
+    <img
+      class="profile-pic"
+      src="{{request.user.instructor.profile_pic.url}}"
+    />
+    {% endif %}
     <p>{{user.instructor.bio}}</p>
     <p><a href="{% url 'logout' %}">Logout</a></p>
     <p><a href="{% url 'password_change' %}">Change Password</a></p>
     <br /><br />
     <hr />
-    {% if form1 and form2 %}
-    <form action="">
-      {{form1.as_p}} {{form2.as_p}}
-      <input type="submit" value="Update" />
-    </form>
-    {% endif %} <br />
-    {% else %}
-    <a href="{% url 'login_custom' %}"><button>Login</button></a>
-    <a href="{% url 'register_instructor' %}"
-      ><button>Register as Instructor</button></a
-    >
+    <a href="{% url 'update_instructor' %}"><button>Update Profile</button></a>
     {% endif %}
   </body>
 </html>
