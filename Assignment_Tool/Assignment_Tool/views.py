@@ -15,10 +15,13 @@ def login_user(request):
       if user is not None:
         login(request, user)
         # return HttpResponse('Auth is successful')
-        if user.instructor is not None:
+        group = request.user.groups.all()[0].name
+        if group == 'instructor':
           # return instructor_update(request)
           return redirect('/instructor/')
           # return render(request, 'home.html', {'bio':user.instructor.bio})
+        elif group == 'student':
+          return redirect('/student/')
       else:
         return HttpResponse('Auth failed. Please check credentials')
   
