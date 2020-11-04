@@ -11,12 +11,11 @@
 {% block body %}
     {% if title == "Update" %}
     <h3>User Update Form</h3>
-    {% elif title == "Student" %}
-    <h3>Register Student Form</h3>
     {% else %}
-    <h3>Register Instructor Form</h3>
+    <h3>Register Student Form</h3>
     {% endif %}
 
+  
     <form action="" method="post" enctype="multipart/form-data">
       {% csrf_token %} {{form1.as_p}} <br />
       {{form2.as_p}}

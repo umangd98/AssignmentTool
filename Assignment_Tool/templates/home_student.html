@@ -16,17 +16,17 @@
     <h1>Assignment Tool</h1>
     {% if user.is_authenticated %}
     <h1>Welcome {{user.username}}</h1>
-    {% if request.user.instructor.profile_pic %}
+    {% if request.user.student.profile_pic %}
     <img
       class="profile-pic"
-      src="{{request.user.instructor.profile_pic.url}}"
+      src="{{request.user.student.profile_pic.url}}"
     />
     {% endif %}
-    <p>{{user.instructor.bio}}</p>
+    <p>{{user.student.bio}}</p>
     <p><a href="{% url 'logout' %}">Logout</a></p>
     <p><a href="{% url 'password_change' %}">Change Password</a></p>
     <br /><br />
     <hr />
-    <a href="{% url 'update_instructor' %}"><button>Update Profile</button></a>
+    <a href="{% url 'update_student' %}"><button>Update Profile</button></a>
     {% endif %}
 {% endblock body %}
