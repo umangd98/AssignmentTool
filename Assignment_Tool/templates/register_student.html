@@ -1,25 +1,8 @@
-{% extends 'base.html' %}
+<h3>Register Student Form</h3>
 
-{% block title %}
-  {% if title %}
-    Update
-  {% else %}
-    Register
-  {% endif %}
-{% endblock title %}
-
-{% block body %}
-    {% if title == "Update" %}
-    <h3>User Update Form</h3>
-    {% else %}
-    <h3>Register Student Form</h3>
-    {% endif %}
-
-  
-    <form action="" method="post" enctype="multipart/form-data">
-      {% csrf_token %} {{form1.as_p}} <br />
-      {{form2.as_p}}
-      <br />
-      <button type="submit">Register</button>
-    </form>
-{% endblock body %}
+<form action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %} {{form1.as_p}} <br />
+  {{form2.as_p}}
+  <br />
+  <button type="submit">Register</button>
+</form>

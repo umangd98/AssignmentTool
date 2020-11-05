@@ -34,14 +34,14 @@ def home(request):
 #         form1 = CreateUserForm()
 #         form2 = StudentRegisterForm()
 
-#     return render(request, 'register.html', {'form1': form1, 'form2': form2, 'title': 'Student'})
+#     return render(request, 'register_student.html', {'form1': form1, 'form2': form2, 'title': 'Student'})
 
 @unauthenticated_user
 def student_register(request):
   if request.method == 'POST':
     form_user = CreateUserForm(request.POST)
     form_student = StudentRegisterForm(request.POST)
-    print(form_user.is_valid(), form_student.is_valid())
+    print(form_user.is_valid(),form_user.errors, form_student.is_valid())
     if form_user.is_valid() and form_student.is_valid():
       user = form_user.save()
       if user is not None:
