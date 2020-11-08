@@ -6,15 +6,21 @@ from Assignment_Tool.decorators import unauthenticated_user
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required(login_url='/login/')
 def home(request):
-  return render(request, 'home_instructor.html')
+  instructor = request.user.instructor
+  assignments = instructor.assignment_set.all()
+  context = {
+    'assignments': assignments
+  }
+  return render(request, 'home_instructor.html', context)
 
 
 @unauthenticated_user
 def instructor_register(request):
   if request.method == 'POST':
     form_user = CreateUserForm(request.POST)
-    form_instructor = InstructorRegisterForm(request.POST)
+    form_instructor = InstructorRegisterForm(request.POST,request.FILES)
     if form_user.is_valid() and form_instructor.is_valid():
       user = form_user.save()
       if user is not None:

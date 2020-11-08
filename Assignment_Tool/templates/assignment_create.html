@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include 'base.html' %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Create Assignment</title>
+  </head>
+  <body>
+    <h1>Assignment Create Form</h1>
+    <form action="" enctype="multipart/form-data" method="POST">
+      {% csrf_token %} {% comment %} <br />
+      {% endcomment %} {{form1.as_p}}
+      <br />
+
+      <button type="submit">Create</button>
+    </form>
+  </body>
+  <script>
+    $(function () {
+      $('#id_deadline').datetimepicker({
+        format: 'd/m/Y H:i',
+      });
+    });
+  </script>
+</html>

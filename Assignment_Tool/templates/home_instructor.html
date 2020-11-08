@@ -1,32 +1,40 @@
 {% extends 'base.html' %}
+<br />
+{% block title %}Home {% endblock title %} {% block body %}
 
-{% block title %}Home {% endblock title %}
+<style>
+  .profile-pic {
+    max-width: 200px;
+    max-height: 200px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 1px solid black;
+  }
+</style>
+<h1>Assignment Tool</h1>
+{% if user.is_authenticated %}
+<h1>Welcome {{user.username}}</h1>
+{% if request.user.instructor.profile_pic %}
+<img class="profile-pic" src="{{request.user.instructor.profile_pic.url}}" />
+{% endif %}
+<p>{{user.instructor.bio}}</p>
+<p><a href="{% url 'logout' %}">Logout</a></p>
+<p><a href="{% url 'password_change' %}">Change Password</a></p>
+<a href="{% url 'update_instructor' %}"><button>Update Profile</button></a>
+{% endif %}
+<br />
+<button><a href="{% url 'create_assignment' %}">Create Assignment</a></button>
+<br /><br />
+<hr />
+<h3>Assignments</h3>
+<ul>
+  {% for assignment in assignments %}
+  <li>
+    Name: {{assignment.title}} || Created: {{assignment.created}} ||
+    <a href="{% url 'view_assignment' assignment.id %}">Link</a> ||
+    <a href="{% url 'update_assignment' assignment.id %}">Update</a>
+  </li>
+  {% endfor %}
+</ul>
 
-{% block body %}
-
-    <style>
-      .profile-pic {
-        max-width: 200px;
-        max-height: 200px;
-        margin: 0 auto;
-        border-radius: 50%;
-        border: 1px solid black;
-      }
-    </style>
-    <h1>Assignment Tool</h1>
-    {% if user.is_authenticated %}
-    <h1>Welcome {{user.username}}</h1>
-    {% if request.user.instructor.profile_pic %}
-    <img
-      class="profile-pic"
-      src="{{request.user.instructor.profile_pic.url}}"
-    />
-    {% endif %}
-    <p>{{user.instructor.bio}}</p>
-    <p><a href="{% url 'logout' %}">Logout</a></p>
-    <p><a href="{% url 'password_change' %}">Change Password</a></p>
-    <br /><br />
-    <hr />
-    <a href="{% url 'update_instructor' %}"><button>Update Profile</button></a>
-    {% endif %}
 {% endblock body %}

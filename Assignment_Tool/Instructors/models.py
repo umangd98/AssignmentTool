@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from Class.models import Class
+frozenset
 # Create your models here.
 
 class Instructor(models.Model):
@@ -9,7 +11,7 @@ class Instructor(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     instructor_id = models.CharField(max_length=20)
     profile_pic = models.ImageField(null=True, blank=True)
-
+    classes = models.ManyToManyField(Class)
     def __str__(self):
         return self.user.username
 
