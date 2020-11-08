@@ -27,6 +27,8 @@ urlpatterns = [
     path('instructor/', include('Instructors.urls')),
     path('student/', include('Students.urls')),
     path('assignment/', include('Assignments.urls')),
+    path('class/', include('Class.urls')),
+
 
     # path('register_instructor/', instructor_register, name='register_instructor')
 

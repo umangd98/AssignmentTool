@@ -22,4 +22,4 @@ class Section(models.Model):
   last_modified = models.DateTimeField(auto_now=True)
   class_name = models.ForeignKey(Class, on_delete=models.CASCADE, default=None)
   def __str__(self):
-      return self.name
+      return self.name + " "+ self.class_name.name

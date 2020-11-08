@@ -36,5 +36,14 @@
   </li>
   {% endfor %}
 </ul>
+<h3>Classes</h3>
+<ul>
+  {% for class in classes %}
+  <li>
+    Name: {{class.name}} Created: {{class.created}}
+    <a href="{% url 'view_class' class.id %}">View</a>
+  </li>
 
+  {% endfor %}
+</ul>
 {% endblock body %}

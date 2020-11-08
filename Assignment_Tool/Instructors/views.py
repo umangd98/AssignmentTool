@@ -10,8 +10,10 @@ from django.contrib.auth.decorators import login_required
 def home(request):
   instructor = request.user.instructor
   assignments = instructor.assignment_set.all()
+  classes = instructor.classes.all()
   context = {
-    'assignments': assignments
+    'assignments': assignments,
+    'classes': classes
   }
   return render(request, 'home_instructor.html', context)
 

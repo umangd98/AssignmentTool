@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Class</title>
+  </head>
+  <body>
+    <h1>Class: {{class_name.name}}</h1>
+    <h2>Instructor: {{request.user.username}}</h2>
+    <br />
+    <h3>Sections:</h3>
+    <ul>
+      {% for section in sections %}
+      <li>
+        {{section.name}}
+        <a href="{% url 'view_section' class_name.id section.id %}">Link</a>
+      </li>
+      {% endfor %}
+    </ul>
+    <hr />
+    <h3>Create Section</h3>
+    <form action="" method="POST">
+      {% csrf_token %} {{form.as_p}}
+      <button type="submit">Create</button>
+    </form>
+  </body>
+</html>
