@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import CreateClassForm, CreateSectionForm
 from django.http import HttpResponse
 from .models import Class, Section
+from Students.models import Student
 # Create your views here.
 def create_class(request):
   if request.method == 'POST':
@@ -47,6 +48,7 @@ def view_section(request, id, sid):
   # print(class_name.name)
   section = Section.objects.get(id=sid)
   students = section.students.all()
+  print(students)
   if request.method == 'POST':
     form_section = CreateSectionForm(request.POST, instance=section)
     if form_section.is_valid():
@@ -59,12 +61,21 @@ def view_section(request, id, sid):
       form_section.save_m2m()
       return redirect('/class/' + str(id) + '/section/' + str(sid))
     else:
-      return HttpResponse('Assignment save failed. Please check credentials')
+      print('POST: ',request.POST)
+      section.students.clear()
+      print(request.POST.getlist('students'))
+      for id in request.POST.getlist("students"):
+        print(id)
+        section.students.add(Student.objects.get(id=int(id)))
+      section.name = request.POST.get('name')
+      section.save()
+      return redirect('/class/' + str(id) + '/section/' + str(sid))
   form = CreateSectionForm(instance=section)
   context = {
     'class_name': class_name,
     'section': section,
     'students': students,
-    'form': form
+    'form': form,
+    'all_students': Student.objects.all()
   }
   return render(request, 'view_section.html', context)
