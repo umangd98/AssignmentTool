@@ -51,13 +51,14 @@ def view_section(request, id, sid):
   print(students)
   if request.method == 'POST':
     form_section = CreateSectionForm(request.POST, instance=section)
-    if form_section.is_valid():
+    if form_section.is_valid() and False:
       # instructor = request.user.instructor
       section = form_section.save(commit=False)
       # print('POST: ',request.POST)
       # print('section: ',section.students.all())
       # print(section.students.all())
       section.save()
+      print("inside django form ")
       form_section.save_m2m()
       return redirect('/class/' + str(id) + '/section/' + str(sid))
     else:
@@ -69,7 +70,7 @@ def view_section(request, id, sid):
         section.students.add(Student.objects.get(id=int(id)))
       section.name = request.POST.get('name')
       section.save()
-      return redirect('/class/' + str(id) + '/section/' + str(sid))
+      return redirect('/class/' + str(class_name.id) + '/section/' + str(sid))
   form = CreateSectionForm(instance=section)
   context = {
     'class_name': class_name,
