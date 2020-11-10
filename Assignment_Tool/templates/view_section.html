@@ -4,11 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    
     <title>Section</title>
   </head>
   <body>
     <h1>Class: {{class_name.name}}</h1>
     <h2>Section: {{section.name}}</h2>
+
+
+
+
+
     <ul>
       {% for student in students %}
       <li>{{student.user.username}}</li>
@@ -16,28 +22,407 @@
     </ul>
     <hr />
     <h3>Section Update</h3>
-    {% comment %}
-    <form action="" method="POST">
-      {% csrf_token %} {{form.as_p}}
-      <button type="submit">Update</button>
-    </form>
-    {% endcomment %}
+
     <hr />
+
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+
+    <h4>Filter Students</h4>
+    <label for="year"> <strong>By Year</strong> </label><br>
+    <input type="checkbox" id="year1" name="year1" value="year1" > <label for="year1">1</label>
+    <input type="checkbox" id="year2" name="year2" value="year2" > <label for="year2">2</label>
+    <input type="checkbox" id="year3" name="year3" value="year3" > <label for="year3">3</label>
+    <input type="checkbox" id="year4" name="year4" value="year4" > <label for="year4">4</label>
+    <input type="checkbox" id="year5" name="year5" value="year5" > <label for="year5">5</label>
+    <input type="checkbox" id="year6" name="year6" value="year6" > <label for="year6">6</label>
+    <br>
+  <label for="department"> <strong>By Department</strong></label><br>
+    <input type="checkbox" id="cse" name="cse" value="cse"> <label for="cse">Computer Science and Engineering</label>
+    <input type="checkbox" id="ece" name="ece" value="ece"> <label for="ece">Electronics and Communication Engineering</label>
+    <input type="checkbox" id="eee" name="eee" value="eee"> <label for="eee">Electrical and Electronics Engineering</label>
+
+    <br>
+
+  <label for="degree"> <strong>By Degree</strong></label><br>
+    <input type="checkbox" id="btech" name="btech" value="btech" > <label for="btech">B.Tech</label>
+    <input type="checkbox" id="mtech" name="mtech" value="mtech" > <label for="mtech">M.Tech</label>
+    <input type="checkbox" id="phd" name="phd" value="phd" > <label for="btech">Phd</label> <br>
+    <input type="button" id="reset" name="reset" value="Reset All">
+ 
+
+    <br>
+    <br>
+
     <form action="" method="POST">
       {% csrf_token %} Name:
       <input type="text" name="name" value="{{section.name}}" /> <br />
-      {% for student in all_students %}
-      <br />
-      {% if student in students %}
-      <input type="checkbox" name="students" value="{{student.id}}" checked />
-      {% else %}
-      <input type="checkbox" name="students" value="{{student.id}}" />
 
-      {% endif %} {{student.user.username}}
-      <br />
-      {% endfor %}
-      <br />
+      <table id="myTable" style="margin-left: auto; margin-right: auto; border: 1px solid black;">
+        <tr class="header">
+          <th style="width: 5%; margin-left: auto; margin-right: auto;">Select</th>
+          <th style="width: 30%; margin-left: auto; margin-right: auto;">Name</th>
+          <th style="width: 30%; margin-left: auto; margin-right: auto;">Enrollment Number</th>
+          <th style="width: 35%; margin-left: auto; margin-right: auto;">Email ID</th>
+        </tr>
+        {% for student in all_students %}
+        <tr>
+          {% if student in students %}
+          <td><input type="checkbox" name="students" value="{{student.id}}" checked /></td>
+          {% else %}
+          <td><input type="checkbox" name="students" value="{{student.id}}" /></td>
+          {% endif %}
+          <td style="text-align: center;">{{student.user.username}}</td>
+          <td style="text-align: center;">{{student.student_id}}</td>
+          <td style="text-align: center;">{{student.user.email}}</td>
+        </tr>
+        {% endfor %}
+  
+      </table>
+
       <input type="submit" value="update" />
+      <script> 
+              
+
+        var year1 = document.querySelector("#year1");
+        var year2 = document.querySelector("#year2");
+        var year3 = document.querySelector("#year3"); 
+        var year4 = document.querySelector("#year4");
+        var year5 = document.querySelector("#year5");
+        var year6 = document.querySelector("#year6");
+
+        var cse = document.querySelector("#cse");
+        var ece = document.querySelector("#ece");
+        var eee = document.querySelector("#eee");
+
+        var btech = document.querySelector("#btech");
+        var mtech = document.querySelector("#mtech");
+        var phd = document.querySelector("#phd");
+
+
+        var reset = document.querySelector("#reset");
+        reset.addEventListener('click',function(){
+          //console.log(document.getElementById("year1").checked);
+          document.getElementById("year1").checked = false;
+          document.getElementById("year2").checked = false;
+          document.getElementById("year3").checked = false;
+          document.getElementById("year4").checked = false;
+          document.getElementById("year5").checked = false;
+          document.getElementById("year6").checked = false;
+
+          document.getElementById("cse").checked = false;
+          document.getElementById("ece").checked = false;
+          document.getElementById("eee").checked = false;
+
+          document.getElementById("btech").checked = false;
+          document.getElementById("mtech").checked = false;
+          document.getElementById("phd").checked = false;
+          table = document.getElementById("myTable");
+          var tr = table.getElementsByTagName("tr");
+          for(var i = 0 ; i < tr.length ; i++)
+          {
+            tr[i].style.display = "";            
+          }
+
+          //console.log(document.getElementById("year1").checked);
+        });
+
+        year1.addEventListener( 'change',
+        function() 
+        {
+            var input = 1;
+            var x = new Date();
+            var mon = x.getMonth();
+            var year = x.getFullYear();
+            year = year - 2000;
+            var filter = year - 1;
+            if(mon > 6)
+            {
+              filter += 1;
+            }
+            if(this.checked) {
+              myyearFunction(filter,1);
+            } else {
+                // Checkbox is not checked..
+                myyearFunction(filter,0);
+            }
+        }
+        );
+
+        year2.addEventListener( 'change',
+        function() 
+        {
+            var input = 1;
+            var x = new Date();
+            var mon = x.getMonth();
+            var year = x.getFullYear();
+            year = year - 2000;
+            var filter = year - 2;
+            if(mon > 6)
+            {
+              filter += 1;
+            }
+            if(this.checked) {
+              myyearFunction(filter,1);
+            } else {
+                // Checkbox is not checked..
+                myyearFunction(filter,0);
+            }
+        }
+        );
+
+        year3.addEventListener( 'change',
+        function() 
+        {
+            var input = 1;
+            var x = new Date();
+            var mon = x.getMonth();
+            var year = x.getFullYear();
+            year = year - 2000;
+            var filter = year - 3;
+            if(mon > 6)
+            {
+              filter += 1;
+            }
+            if(this.checked) {
+              myyearFunction(filter,1);
+            } else {
+                // Checkbox is not checked..
+                myyearFunction(filter,0);
+            }
+        }
+        );
+
+        year4.addEventListener( 'change',
+        function() 
+        {
+            var input = 1;
+            var x = new Date();
+            var mon = x.getMonth();
+            var year = x.getFullYear();
+            year = year - 2000;
+            var filter = year - 4;
+            if(mon > 6)
+            {
+              filter += 1;
+            }
+            if(this.checked) {
+              myyearFunction(filter,1);
+            } else {
+                // Checkbox is not checked..
+                myyearFunction(filter,0);
+            }
+        }
+        );
+
+        year5.addEventListener( 'change',
+        function() 
+        {
+            var input = 1;
+            var x = new Date();
+            var mon = x.getMonth();
+            var year = x.getFullYear();
+            year = year - 2000;
+            var filter = year - 5;
+            if(mon > 6)
+            {
+              filter += 1;
+            }
+            if(this.checked) {
+              myyearFunction(filter,1);
+            } else {
+                // Checkbox is not checked..
+                myyearFunction(filter,0);
+            }
+        }
+        );
+
+        year6.addEventListener( 'change',
+        function() 
+        {
+            var input = 1;
+            var x = new Date();
+            var mon = x.getMonth();
+            var year = x.getFullYear();
+            year = year - 2000;
+            var filter = year - 6;
+            if(mon > 6)
+            {
+              filter += 1;
+            }
+            if(this.checked) {
+              myyearFunction(filter,1);
+            } else {
+                // Checkbox is not checked..
+                myyearFunction(filter,0);
+            }
+        }
+        );
+
+        cse.addEventListener( 'change',
+        function() 
+        {
+            var filter = "CSE";
+            if(this.checked) {
+              myyearFunction(filter,1);
+            } else {
+                // Checkbox is not checked..
+                myyearFunction(filter,0);
+            }
+        }
+        );
+
+        ece.addEventListener( 'change',
+        function() 
+        {
+            var filter = "ECE";
+            if(this.checked) {
+              myyearFunction(filter,1);
+            } else {
+                // Checkbox is not checked..
+                myyearFunction(filter,0);
+            }
+        }
+        );
+
+        eee.addEventListener( 'change',
+        function() 
+        {
+            var filter = "EEE";
+            if(this.checked) {
+              myyearFunction(filter,1);
+            } else {
+                // Checkbox is not checked..
+                myyearFunction(filter,0);
+            }
+        }
+        );
+
+        btech.addEventListener( 'change',
+        function() 
+        {
+            var filter = "BT";
+            if(this.checked) {
+              myyearFunction(filter,1);
+            } else {
+                // Checkbox is not checked..
+                myyearFunction(filter,0);
+            }
+        }
+        );
+
+        mtech.addEventListener( 'change',
+        function() 
+        {
+            var filter = "MT";
+            if(this.checked) {
+              myyearFunction(filter,1);
+            } else {
+                // Checkbox is not checked..
+                myyearFunction(filter,0);
+            }
+        }
+        );
+
+        phd.addEventListener( 'change',
+        function() 
+        {
+            var filter = "PD";
+            if(this.checked) {
+              myyearFunction(filter,1);
+            } else {
+                // Checkbox is not checked..
+                myyearFunction(filter,0);
+            }
+        }
+        );
+
+          function myyearFunction(filter,check) 
+          {
+            // Declare variables
+            var table, tr, td, i, txtValue;
+            //input = document.getElementById("myInput");
+            //filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            // Loop through all table rows, and hide those who don't match the search query
+            if(check == 1)
+            {
+              for (i = 0; i < tr.length; i++) 
+              {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td) 
+                {
+                  txtValue = td.textContent || td.innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) 
+                  {
+                    if(tr[i].style.display == "")
+                    {
+                      tr[i].style.display == "";
+                    }
+                    else if(tr[i].style.display == "none")
+                    {
+                      tr[i].style.display == "none";
+                    }
+                  } 
+                  else 
+                  {
+                    tr[i].style.display = "none";
+                  }
+                }
+              }
+            }
+            else if(check == 0)
+            {
+              for (i = 0; i < tr.length; i++) 
+              {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) 
+                {
+                  txtValue = td.textContent || td.innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) 
+                  {
+                    if(tr[i].style.display == "")
+                    {
+                      tr[i].style.display == "none";
+                    }
+                    else if(tr[i].style.display == "none")
+                    {
+                      tr[i].style.display == "";
+                    }
+                  } 
+                  else 
+                  {
+                    tr[i].style.display = "";
+                  }
+                }
+              }
+            } 
+          }
+
+          function myFunction() 
+          {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+              td = tr[i].getElementsByTagName("td")[1];
+              if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+                } else {
+                  tr[i].style.display = "none";
+                }
+              }
+            }
+          }
+              
+      </script>
     </form>
   </body>
 </html>
