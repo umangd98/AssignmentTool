@@ -13,7 +13,7 @@ class CreateSectionForm(forms.ModelForm):
   
   class Meta:
     model = Section
-    fields = ['name','students']
+    fields = ['name',]
   
   # students = forms.MultipleChoiceField( widget=forms.CheckboxSelectMultiple)
 
