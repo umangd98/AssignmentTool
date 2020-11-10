@@ -16,9 +16,28 @@
     </ul>
     <hr />
     <h3>Section Update</h3>
+    {% comment %}
     <form action="" method="POST">
       {% csrf_token %} {{form.as_p}}
       <button type="submit">Update</button>
+    </form>
+    {% endcomment %}
+    <hr />
+    <form action="" method="POST">
+      {% csrf_token %} Name:
+      <input type="text" name="name" value="{{section.name}}" /> <br />
+      {% for student in all_students %}
+      <br />
+      {% if student in students %}
+      <input type="checkbox" name="students" value="{{student.id}}" checked />
+      {% else %}
+      <input type="checkbox" name="students" value="{{student.id}}" />
+
+      {% endif %} {{student.user.username}}
+      <br />
+      {% endfor %}
+      <br />
+      <input type="submit" value="update" />
     </form>
   </body>
 </html>
