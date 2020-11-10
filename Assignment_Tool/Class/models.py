@@ -17,7 +17,7 @@ class Class(models.Model):
   
 class Section(models.Model):
   name = models.CharField(max_length=20)
-  students = models.ManyToManyField(Student)
+  students = models.ManyToManyField(Student, null=True, blank=True)
   created = models.DateTimeField(auto_now_add=True)
   last_modified = models.DateTimeField(auto_now=True)
   class_name = models.ForeignKey(Class, on_delete=models.CASCADE, default=None)
