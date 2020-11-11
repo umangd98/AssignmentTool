@@ -14,7 +14,9 @@
     <h4>Description</h4>
     <p>{{assignment.description}}</p>
     <p>Prog File: <a href="{{assignment.assignment_pdf.url}}">URL</a></p>
+    {% if assignment.input_test_cases %}
     <p>Input Case: <a href="{{assignment.input_test_cases.url}}">URL</a></p>
+    {% endif %}
     <p>Last Updated: {{assignment.last_modified}}</p>
     <a href="{% url 'home_instructor' %}"><button>Back</button></a>
   </body>
