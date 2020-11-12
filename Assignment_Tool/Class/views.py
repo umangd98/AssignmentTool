@@ -48,7 +48,8 @@ def view_section(request, id, sid):
   # print(class_name.name)
   section = Section.objects.get(id=sid)
   students = section.students.all()
-  print(students)
+  sent_assignments = section.sent_assignment_set.all()
+  print(sent_assignments)
   if request.method == 'POST':
     #form_section = CreateSectionForm(request.POST, instance=section)
     # if form_section.is_valid():
@@ -76,6 +77,7 @@ def view_section(request, id, sid):
     'section': section,
     'students': students,
     'form': form,
-    'all_students': Student.objects.all()
+    'all_students': Student.objects.all(),
+    'sent_assignments':sent_assignments
   }
   return render(request, 'view_section.html', context)

@@ -19,5 +19,23 @@
     {% endif %}
     <p>Last Updated: {{assignment.last_modified}}</p>
     <a href="{% url 'home_instructor' %}"><button>Back</button></a>
+    <hr />
+    {% if is_instructor %}
+    <h3>Sections Sent</h3>
+    <a href="{% url 'send_assignment' assignment.id %}"
+      ><button>Send Now</button></a
+    >
+    <ul>
+      {% for section in sent_sections %}
+      <li>
+        <a href="{% url 'view_section' section.class_name.id section.id %}"
+          >{{section.name}} - {{section.class_name.name}}</a
+        >
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h3>Submission Form</h3>
   </body>
 </html>

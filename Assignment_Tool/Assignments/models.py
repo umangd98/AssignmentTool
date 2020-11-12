@@ -1,5 +1,7 @@
 from django.db import models
 from Instructors.models import Instructor
+from Students.models import Student
+from Class.models import Section
 # Create your models here.
 def assignment_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -12,6 +14,8 @@ def input_directory_path(instance, filename):
 def output_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return 'assignment_output_{0}/{1}'.format(instance.instructor.user.username, filename)
+
+
 
 class Assignment(models.Model):
   title = models.CharField(max_length=100)
@@ -27,3 +31,16 @@ class Assignment(models.Model):
   def __str__(self):
       return self.title
   
+
+
+
+
+class Sent_Assignment(models.Model):
+  assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+  section = models.ForeignKey(Section, on_delete=models.CASCADE)
+  sent = models.DateTimeField(auto_now_add=True)
+
+  def __str__(self):
+      return self.assignment.title +" "+ self.section.name + " "+self.section.class_name.name
+  
+

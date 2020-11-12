@@ -5,12 +5,19 @@ from django.http import HttpResponse
 from Assignment_Tool.decorators import unauthenticated_user
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
+from Submission.models import Submission
 
 # Create your views here.
 
 
 def home(request):
-    return render(request, 'home_student.html')
+    student = request.user.student
+    assignments = student.submission_set.all()
+    print(assignments)
+    context = {
+      'assignments': assignments
+    }
+    return render(request, 'home_student.html', context)
 
 
 # @unauthenticated_user
