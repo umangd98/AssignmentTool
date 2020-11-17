@@ -24,5 +24,5 @@ class Grade(models.Model):
   grade = models.CharField(max_length=10)
 
   def __str__(self):
-      return self.submission
+      return self.submission.student.user.username + " " + self.submission.sent_assignment.assignment.title
   

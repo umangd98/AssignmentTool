@@ -34,8 +34,42 @@
       </li>
       {% endfor %}
     </ul>
-    {% endif %}
+    <hr />
+    <h3>Submissions:</h3>
+    <p>Submitted</p>
+    <ul>
+      {% for submitted_assignment in instructor_submissions_submitted %}
+      <li>
+        <p>
+          {{submitted_assignment.student}}
+          <a href="{% url 'view_submission' submitted_assignment.id %}">View</a>
+        </p>
+      </li>
+      {% endfor %}
+    </ul>
+    <p>Not Submitted</p>
+    <ul>
+      {% for not_submitted_assignment in instructor_submissions_not_submitted %}
 
+      <li>{{not_submitted_assignment.student}}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <br />
+    {% if is_student %}
+    <br />
+    {% if not student_submitted %}
     <h3>Submission Form</h3>
+    <a href="{% url 'submit_assignment' assignment.id %}"
+      ><button>Submit Here</button></a
+    >
+    <br />
+    {% else %}
+    <h3>Submission</h3>
+    <a href="{{submission.submission_file.url}}"
+      >{{submission.submission_file.name}}</a
+    >
+    <br />
+    {% endif %} {% endif %}
   </body>
 </html>

@@ -32,22 +32,57 @@ def view_assignment(request, id):
   sent_sections = []
   is_instructor = False
   is_student = False
+  print("Sent assignments of this assignment ",sent_assignments )
+  student_submitted = False
+  submission = None
   for s in sent_assignments:
     sent_sections.append(s.section)
   # print(sent_sections)
+  instructor_submissions_submitted = []
+  instructor_submissions_not_submitted = []
   if group == 'instructor':
     #send form
     is_instructor=True
+   
+
+    for submission in Submission.objects.all():
+      for ss in sent_assignments:
+        if submission.sent_assignment == ss:
+          if submission.submission_file.name:
+            instructor_submissions_submitted.append(submission)
+          else:
+            instructor_submissions_not_submitted.append(submission)
+    print("instructor_submissions_submitted: ",instructor_submissions_submitted)
+    print("instructor_submissions_not_submitted: ",instructor_submissions_not_submitted)
     pass
   elif group == 'student':
     #submission form
     is_student=True
+    student = request.user.student
+    submissions = student.submission_set.all()
+    print("Submissions: ",submissions)
+    for submission in submissions:
+      if submission.sent_assignment.assignment == assignment:
+        if submission.submission_file.name:
+          student_submitted = True
+          print("Submitted",submission, submission.submission_file.name)
+          break
+        else:
+          print("Not Submitted")
+          student_submitted = False
+    # sent_assignments = [x for x in submissions.sent_assignment.all()]
     pass
+  print(student_submitted)
   context = {
     'assignment': assignment,
     'sent_sections': sent_sections,
     'is_instructor': is_instructor, 
-    'is_student': is_student
+    'is_student': is_student,
+    'student_submitted':student_submitted,
+    'submission': submission,
+    'instructor_submissions_submitted':instructor_submissions_submitted,
+    'instructor_submissions_not_submitted':instructor_submissions_not_submitted
+
   }
   return render(request, 'view_assignment.html', context)
 

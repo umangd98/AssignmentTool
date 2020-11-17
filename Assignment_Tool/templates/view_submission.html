@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>View Submission</title>
+  </head>
+  <body>
+    <h1>Submission - {{submission.sent_assignment.assignment}}</h1>
+    <h2>Student: {{submission.student}}</h2>
+    <p>Submitted On: {{submission.last_modified}}</p>
+    <p>Section: {{submission.sent_assignment.section}}</p>
+    <p>Link: <a href="{{submission.submission_file.url}}">View</a></p>
+    <hr />
+    <h2>Grade</h2>
+    <form action="" method="POST">
+      {% csrf_token %} {{form.as_p}}
+      <button type="submit">Grade</button>
+    </form>
+  </body>
+</html>
