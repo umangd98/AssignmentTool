@@ -8,23 +8,88 @@
   </head>
   <body>
     <h1>Send Assignment: {{assignment}}</h1>
-    <form action="" method="POST">
+    <!-- <form action="" method="POST">
       {% csrf_token %} {{form.as_p}}
       <button type="submit">Send</button>
-    </form>
+    </form> -->
     <hr />
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Courses..">
+    <br>
+    <br>
+
     <form action="" method="POST">
       {% csrf_token %}
-      <select name="section" required>
-        <option value selected>Select a Section</option>
+       <select name="section" required>
+        <option id="myOption" value selected>Select a Section</option>
         {% for section in sections %}
-        <option value="{{section.id}}">
+        <option id="myList" value="{{section.id}}">
           {{section.name}} {{section.class_name.name}}
         </option>
         {% endfor %}
       </select>
-      <br /><br />
+
+
+      
+
+      <input type="submit" value="Send" />
+
+    </form>
+    
+    <form action="" method="POST">
+      {% csrf_token %}
+      <table id="myTable" style="border: 1px solid black">
+        <tr class="header">
+          <th style="width: 5%; margin-left: auto; margin-right: auto">
+            Select
+          </th>
+          <th style="width: 30%; margin-left: auto; margin-right: auto">
+            Class Name
+          </th>
+          <th style="width: 30%; margin-left: auto; margin-right: auto">
+            Section Name
+          </th>
+        </tr>
+        {% for section in sections %}
+        <tr>
+          <td>
+            <input type="radio" name="section" value="{{section.id}}" />
+          </td>
+          <td style="text-align: center">{{section.class_name.name}}</td>
+          <td style="text-align: center">{{section.name}}</td>
+        </tr>
+        {% endfor %}
+      </table> 
+
       <input type="submit" value="Send" />
     </form>
+
+
+
+
+
+
+    <script>
+      function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[1];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+    </script>
   </body>
 </html>
