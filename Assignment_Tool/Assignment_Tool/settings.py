@@ -26,7 +26,7 @@ SECRET_KEY = '4o6!+wnh#99$)k-@-m-ik1$3!c3s5bplg6=8%(p@n6(*#q#45a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'Students',
     'Assignments',
     'Class',
-    'Submission'
+    'Submission',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -153,3 +154,20 @@ else:
     EMAIL_BACKEND = (
         "django.core.mail.backends.console.EmailBackend"
     )
+
+
+
+#S3 BUCKETS CONFIG
+
+AWS_ACCESS_KEY_ID = 'AKIAYADQBYH4IYX4BKTJ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'btp2-at1-bucket'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_S3_REGION_NAME = "ap-south-1"
+#AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_ADDRESSING_STYLE = "virtual"
+
+
