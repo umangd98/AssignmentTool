@@ -12,21 +12,33 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import json
+from django.core.exceptions import ImproperlyConfigured
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+with open(os.path.join(BASE_DIR, 'secrets.json')) as secrets_file:
+    secrets = json.load(secrets_file)
+
+def get_secret(setting, secrets=secrets):
+    """Get secret setting or fail with ImproperlyConfigured"""
+    try:
+        return secrets[setting]
+    except KeyError:
+        raise ImproperlyConfigured("Set the {} setting".format(setting))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '4o6!+wnh#99$)k-@-m-ik1$3!c3s5bplg6=8%(p@n6(*#q#45a'
+SECRET_KEY = get_secret('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,7 +54,8 @@ INSTALLED_APPS = [
     'Students',
     'Assignments',
     'Class',
-    'Submission'
+    'Submission',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -81,8 +94,15 @@ WSGI_APPLICATION = 'Assignment_Tool.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'assignmenttool',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'USER': 'root',
+        'PASSWORD': get_secret('DB_PASSWORD'),
+        # 'OPTIONS' : {
+        #     "SET sql_mode='STRICT_TRANS_TABLES'"
+        # }
     }
 }
 
@@ -146,3 +166,26 @@ else:
     EMAIL_BACKEND = (
         "django.core.mail.backends.console.EmailBackend"
     )
+
+
+
+#S3 BUCKETS CONFIG
+
+AWS_ACCESS_KEY_ID = get_secret('AWS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = get_secret('AWS_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = 'btp2-at1-bucket'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_S3_REGION_NAME = "ap-south-1"
+#AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_ADDRESSING_STYLE = "virtual"
+
+
+
+
+
+
+
+

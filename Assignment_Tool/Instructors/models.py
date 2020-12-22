@@ -11,7 +11,7 @@ class Instructor(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     instructor_id = models.CharField(max_length=20)
     profile_pic = models.ImageField(null=True, blank=True)
-    classes = models.ManyToManyField(Class, null=True, blank=True)
+    classes = models.ManyToManyField(Class, blank=True)
     def __str__(self):
         return self.user.username
 
