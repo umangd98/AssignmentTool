@@ -46,6 +46,6 @@
   </li>
 
   {% endfor %}
-  <a href="http://127.0.0.1:8090/class/create"> Create new Class</a>
+  <a href="{% url 'create_class' %}"> Create new Class</a>
 </ul>
 {% endblock body %}

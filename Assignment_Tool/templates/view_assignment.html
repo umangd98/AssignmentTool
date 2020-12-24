@@ -44,7 +44,7 @@
       <li>
         <p>
           {{submitted_assignment.student}}
-          <a href="{% url 'view_submission' submission.id %}">View</a>
+          <a href="{% url 'view_submission' submitted_assignment.id %}">View</a>
         </p>
       </li>
       {% endfor %}
@@ -70,6 +70,9 @@
     <h3>Submission</h3>
     <a href="{{submission.submission_file.url}}"
       >{{submission.submission_file.name}}</a
+    >
+    <a href="{% url 'submit_assignment' assignment.id %}"
+      ><button>View</button></a
     >
     <br />
     {% endif %} {% endif %}

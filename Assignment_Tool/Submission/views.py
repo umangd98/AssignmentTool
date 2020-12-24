@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import SubmissionForm, GradeForm
 from .models import Submission, Grade
 from Assignments.models import Assignment, Sent_Assignment
+from django.utils import timezone
+now = timezone.now()
 # Create your views here.
 def SubmitAssignment(request,id):
   assignment = Assignment.objects.get(id=id)
@@ -19,7 +21,8 @@ def SubmitAssignment(request,id):
   form = SubmissionForm(instance=submission)
   if request.method == 'POST':
     form = SubmissionForm(request.POST, request.FILES, instance=submission)
-    if form.is_valid():
+    print(now)
+    if form.is_valid() and now<=assignment.deadline:
       form.save()
     return redirect('/assignment/'+str(assignment.id))
   return render(request, 'submit_assignment.html', {'form':form, 'assignment': assignment, 'user': student})

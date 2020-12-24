@@ -8,6 +8,9 @@ verify_ssl = true
 [packages]
 django = "*"
 pillow = "*"
+django-storages = "*"
+boto3 = "*"
+mysqlclient = "*"
 
 [requires]
 python_version = "3.7"
