@@ -20,9 +20,12 @@
     <p>Input Case: <a href="{{assignment.input_test_cases.url}}">URL</a></p>
     {% endif %}
     <p>Last Updated: {{assignment.last_modified}}</p>
-    <a href="{% url 'home_instructor' %}"><button>Back</button></a>
-    <hr />
+    <a href="{% url 'home' %}"><button>Back</button></a>
     {% if is_instructor %}
+    <a href="{% url 'update_assignment' assignment.id %}"
+      ><button>Update</button>
+    </a>
+    <hr />
     <h3>Sections Sent</h3>
     <a href="{% url 'send_assignment' assignment.id %}"
       ><button>Send Now</button></a

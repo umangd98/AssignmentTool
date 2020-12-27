@@ -32,4 +32,14 @@ def login_user(request):
 
 
 def home(request):
+  if request.user.is_authenticated:
+    group = request.user.groups.all()[0].name
+    if group == 'instructor':
+      # return instructor_update(request)
+      return redirect('/instructor/')
+      # return render(request, 'home.html', {'bio':user.instructor.bio})
+    elif group == 'student':
+      return redirect('/student/')
+  else:
+    print("not logged in")
   return render(request, 'home.html')
