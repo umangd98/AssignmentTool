@@ -29,9 +29,6 @@
         }
       }
     </style>
-
-  </head>
-
   <style>
     .profile-pic {
       max-width: 200px;
@@ -41,6 +38,9 @@
       border: 1px solid black;
     }
   </style>
+  </head>
+
+<body>
   <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1 shadow">
     <div class="container">
       <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://127.0.0.1:8000/instructor/">Assignment Tool</a>
@@ -56,7 +56,7 @@
 
     </div>
   </header>
-    <body>
+    
     <div class="container">
       <div class="row">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -139,35 +139,29 @@
                   <a href="{% url 'create_class' %}">
                     <button type="button" class="btn btn-sm btn-outline-success">Create a New Class</button>
                   </a>
-                  <a href="{% url 'create_class' %}">
-                    <button type="button" class="btn btn-sm btn-outline-success">Add Section</button>
-                  </a>
+                    <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Section</button>
                 </div>
               </div>
             </div>
                 <br />
                 <h3>Sections:</h3>
-                <ul>
+                {% comment %} <ul>
                   {% for section in sections %}
                   <li>
                     {{section.name}}
                     <a href="{% url 'view_section' class_name.id section.id %}">Link</a>
                   </li>
                   {% endfor %}
-                </ul>
+                </ul> {% endcomment %}
 
               {% for section in sections %}
-                <a href="{% url 'view_section' class_name.id section.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <a href="{% url 'view_section' class_name.id section.id %}" class="w-25 list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">{{class.name}}</h5>
-                  <small>{{section.name}}</small>
+                  <small>{{section.name}}</small> <small>{{section.students.count}}</small>
                 </div>
                 </a>
               {% endfor %}
-              <h3>Create Section</h3>
-                  <form action="" method="POST">
-                  {% csrf_token %} {{form.as_p}}
-                  <button type="submit">Create</button>
+              
           </main>
       </div>
     </div>
@@ -186,5 +180,32 @@
     </footer>
   </div>
 
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create Section</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="" method="POST">
+                  {% csrf_token %} {{form.as_p}}
+                  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
   </body>
 </html>
