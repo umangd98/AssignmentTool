@@ -71,6 +71,8 @@
         border-radius: 50%;
         border: 1px solid black;
       }
+
+      .top-buffer { margin-top:20px; }
     </style>
   </head>
   <body>
@@ -108,6 +110,19 @@
       <a href="{% url 'register_student' %}"
         ><button class="btn btn-primary">Register as Student</button></a
       >
+    </div>
+
+    <div class="container pt-4 my-md-5 pt-md-5 border-top">
+      <div class="row">
+        <footer class="">
+          <div class="row">
+            <div class="col-12 text-center">
+              TECHNOPRENEURES
+              <small class="d-block mb-3 text-muted">© <script>document.write(new Date().getFullYear())</script></small>
+            </div>
+          </div>
+        </footer>
+      </div>
     </div>
   </body>
 </html>
