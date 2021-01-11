@@ -100,18 +100,87 @@
       </div>
     </header>
       <div class="container">
-        <h3>Register Student Form</h3>
-        <div class="row">
-          <div class="col-md-5">
-            <form action="" method="post" enctype="multipart/form-data">
-              {% csrf_token %} {{form1|crispy}} <br />
-              {{form2|crispy}}
-              <br />
-              <button type="submit" class="btn btn-primary">Register</button>
-            </form>
+        <div class="container my-3">
+          <div class="row justify-content-center">
+            <div class="col-8 text-left mt-3">
+              <div class="card container p-2 shadow-lg border-light">
+                <h3 class="text-center">Register Student Form</h3>
+                <div class="row">
+                  <div class="col-md-12">
+                      <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %} 
+                        <div id="div_id_username" class="form-group"> 
+                          <label for="id_username" class=" requiredField"><span class="asteriskField">*</span> </label> 
+                          <div class=""> 
+                            <input type="text" name="username" maxlength="150" autofocus="" class="textinput textInput form-control" required="" id="id_username" placeholder="User Name"> <small id="hint_id_username" class="form-text text-muted">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small> 
+                          </div> 
+                        </div> 
+                        <div id="div_id_first_name" class="form-group"> 
+                          <label for="id_first_name" class=""></label> 
+                          <div class=""> 
+                            <input type="text" name="first_name" maxlength="150" class="textinput textInput form-control" id="id_first_name" placeholder="First Name"> 
+                          </div> 
+                        </div> 
+                        <div id="div_id_last_name" class="form-group"> 
+                          <label for="id_last_name" class=""></label> 
+                          <div class=""> 
+                            <input type="text" name="last_name" maxlength="150" class="textinput textInput form-control" id="id_last_name" placeholder="Last Name"> 
+                          </div> 
+                        </div> 
+                        <div id="div_id_email" class="form-group"> 
+                          <label for="id_email" class=""></label> 
+                          <div class=""> 
+                            <input type="email" name="email" maxlength="254" class="emailinput form-control" id="id_email" placeholder="Email"> 
+                          </div> 
+                        </div> 
+                        <div id="div_id_password1" class="form-group"> 
+                          <label for="id_password1" class=" requiredField"><span class="asteriskField">*</span> </label> 
+                          <div class=""> 
+                            <input type="password" name="password1" autocomplete="new-password" class="textinput textInput form-control" required="" id="id_password1" placeholder="New Password"> 
+                            <small id="hint_id_password1" class="form-text text-muted">
+                            <ul>
+                              <li>Your password can’t be too similar to your other personal information.</li>
+                              <li>Your password must contain at least 8 characters.</li>
+                              <li>Your password can’t be a commonly used password.</li>
+                              <li>Your password can’t be entirely numeric.</li>
+                            </ul>
+                            </small> 
+                          </div> 
+                        </div> 
+                        <div id="div_id_password2" class="form-group"> 
+                          <label for="id_password2" class=" requiredField"><span class="asteriskField">*</span></label> 
+                          <div class=""> 
+                            <input type="password" name="password2" autocomplete="new-password" class="textinput textInput form-control" required="" id="id_password2" placeholder="Confirm Password"> 
+                          </div>
+                        </div>
+                        <br>
+                        <div id="div_id_profile_pic" class="form-group"> 
+                          <label for="id_profile_pic" class="">Profile pic</label> 
+                          <div class=""> 
+                            <input type="file" name="profile_pic" accept="image/*" class="clearablefileinput form-control-file" id="id_profile_pic"> 
+                          </div> 
+                        </div>
+                        <div id="div_id_student_id" class="form-group"> 
+                          <label for="id_student_id" class=" requiredField"><span class="asteriskField">*</span> 
+                          </label> 
+                          <div class=""> 
+                            <input type="text" name="student_id" maxlength="10" class="textinput textInput form-control" required="" id="id_student_id" placeholder="Student ID"> 
+                          </div> 
+                        </div>
+                        <br>
+                        <div class="d-grid gap-2">
+                          <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </div>
+                        
+                      </form>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+    </div>
 
       <div class="container pt-4 my-md-5 pt-md-5 border-top">
         <footer class="">
@@ -125,3 +194,11 @@
       </div>
   </body>
 </html>
+
+
+
+
+
+
+
+
