@@ -44,12 +44,16 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    #django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #third party apps
+    'crispy_forms',
+    #my apps
     'Instructors', 
     'Students',
     'Assignments',
@@ -149,18 +153,18 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/images')
 
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGOUT_REDIRECT_URL = '/'
 
 
-if not DEBUG:
+if DEBUG:
       EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-      EMAIL_HOST_USER = "parwizforogh0@gmail.com"
+      EMAIL_HOST_USER = "technopreneurs123@gmail.com"
       EMAIL_HOST = 'smtp.gmail.com'
       EMAIL_PORT = 587
       EMAIL_USE_TLS = True
-      EMAIL_HOST_PASSWORD = "Your Password"
+      EMAIL_HOST_PASSWORD = get_secret('EMAIL_PASSWORD')
 
 else:
     EMAIL_BACKEND = (

@@ -1,27 +1,124 @@
-<!DOCTYPE html>
+{% load crispy_forms_tags %}
 <html lang="en">
-  {% include 'base.html' %}
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Create Assignment</title>
-  </head>
-  <body>
-    <h1>Assignment Create Form</h1>
-    <form action="" enctype="multipart/form-data" method="POST">
-      {% csrf_token %} {% comment %} <br />
-      {% endcomment %} {{form1.as_p}}
-      <br />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Assignment Tool for VNIT">
+    <meta name="author" content="Akshansh Sharma and Umang Dhandhania">
+    <meta name="generator" content="Hugo 0.79.0">
+    <title>Home | Instructor</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"
+  ></script>
 
-      <button type="submit">Create</button>
-    </form>
+  <!-- XDSoft DateTimePicker -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+    integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y="
+    crossorigin="anonymous"
+  />
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
+    integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk="
+    crossorigin="anonymous"
+  ></script>
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="manifest" href="/docs/5.0/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#7952b3">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+
+  </head>
+
+  <style>
+    .profile-pic {
+      max-width: 200px;
+      max-height: 200px;
+      margin: 0 auto;
+      border-radius: 50%;
+      border: 1px solid black;
+    }
+  </style>
+  <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1 shadow">
+    <div class="container">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://127.0.0.1:8000/instructor/">Assignment Tool</a>
+      <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <span class="navbar-text ms-auto text-capitalize">Welcome, {{user.username}}</span>
+      <span class="profile-ava">
+        <a href="{% url 'update_instructor' %}" class="container">
+          <img class="img-thumbnail" src="{{request.user.instructor.profile_pic.url}}" alt="" width="74">
+        </a>
+      </span>
+
+    </div>
+  </header>
+  <body>
+    <div class="container">
+      <div class="container my-3">
+        <div class="row justify-content-center">
+          <div class="col-8 text-left mt-3">
+            <div class="card container p-2 shadow-lg border-light">
+              <h3 class="text-center">Assignment Create Form</h3>
+              <div class="row">
+                <div class="col-md-12">
+                  <form action="" enctype="multipart/form-data" method="POST">
+                    {% csrf_token %} 
+                    {{form1|crispy}}
+                    <br />
+                    <div class="">
+                    <button type="submit" class="btn btn-success btn-lg btn-block">Create</button>
+                    </div>
+                  </form>
+    
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
-  <script>
-    $(function () {
-      $('#id_deadline').datetimepicker({
-        format: 'Y-m-d H:i',
+    <script>
+      $(function () {
+        $('#id_deadline').datetimepicker({
+          format: 'Y-m-d H:i',
+        });
       });
-    });
-  </script>
+    </script>
+  </body>
 </html>
+
+
+

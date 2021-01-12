@@ -47,7 +47,7 @@ def home(request):
 def student_register(request):
   if request.method == 'POST':
     form_user = CreateUserForm(request.POST or None)
-    form_student = StudentRegisterForm(request.POST or None)
+    form_student = StudentRegisterForm(request.POST, request.FILES)
     print(form_user.is_valid(),form_user.errors, form_student.is_valid())
     if form_user.is_valid() and form_student.is_valid():
       user = form_user.save()
