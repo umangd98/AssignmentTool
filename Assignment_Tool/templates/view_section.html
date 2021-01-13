@@ -1,403 +1,748 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Assignment Tool for VNIT" />
+    <meta name="author" content="Akshansh Sharma and Umang Dhandhania" />
+    <meta name="generator" content="Hugo 0.79.0" />
+    <title>Section | Instructor</title>
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+      integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+      crossorigin="anonymous"
+    ></script>
 
-    <title>Section</title>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <style>
+      .profile-pic {
+        max-width: 200px;
+        max-height: 200px;
+        margin: 0 auto;
+        border-radius: 50%;
+        border: 1px solid black;
+      }
+    </style>
   </head>
   <body>
-    <h1>Class: {{class_name.name}}</h1>
-    <h2>Section: {{section.name}}</h2>
-
-    <ul>
-      {% for student in students %}
-      <li>{{student.user.username}}</li>
-      {% endfor %}
-    </ul>
-    <hr />
-    <h3>Sent Assignments</h3>
-    <ul>
-      {% for assignment in sent_assignments %}
-      <li>
-        <a href="{% url 'view_assignment' assignment.assignment.id %}"
-          >{{assignment.assignment.title}}</a
+    <header
+      class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1 shadow"
+    >
+      <div class="container">
+        <a
+          class="navbar-brand col-md-3 col-lg-2 me-0 px-3"
+          href="http://127.0.0.1:8000/instructor/"
+          >Assignment Tool</a
         >
-      </li>
-      {% endfor %}
-    </ul>
-    <br />
-    <hr />
-    <h3>Section Update</h3>
-
-    <input
-      type="text"
-      id="myInput"
-      onkeyup="myFunction()"
-      placeholder="Search for names.."
-    />
-
-    <h4>Filter Students</h4>
-    <label for="year"> <strong>By Year</strong> </label><br />
-    <input type="checkbox" id="year1" name="year1" value="year1" />
-    <label for="year1">1</label>
-    <input type="checkbox" id="year2" name="year2" value="year2" />
-    <label for="year2">2</label>
-    <input type="checkbox" id="year3" name="year3" value="year3" />
-    <label for="year3">3</label>
-    <input type="checkbox" id="year4" name="year4" value="year4" />
-    <label for="year4">4</label>
-    <input type="checkbox" id="year5" name="year5" value="year5" />
-    <label for="year5">5</label>
-    <input type="checkbox" id="year6" name="year6" value="year6" />
-    <label for="year6">6</label>
-    <br />
-    <label for="department"> <strong>By Department</strong></label
-    ><br />
-    <input type="checkbox" id="cse" name="cse" value="cse" />
-    <label for="cse">Computer Science and Engineering</label>
-    <input type="checkbox" id="ece" name="ece" value="ece" />
-    <label for="ece">Electronics and Communication Engineering</label>
-    <input type="checkbox" id="eee" name="eee" value="eee" />
-    <label for="eee">Electrical and Electronics Engineering</label>
-
-    <br />
-
-    <label for="degree"> <strong>By Degree</strong></label
-    ><br />
-    <input type="checkbox" id="btech" name="btech" value="btech" />
-    <label for="btech">B.Tech</label>
-    <input type="checkbox" id="mtech" name="mtech" value="mtech" />
-    <label for="mtech">M.Tech</label>
-    <input type="checkbox" id="phd" name="phd" value="phd" />
-    <label for="btech">Phd</label> <br />
-    <input type="button" id="reset" name="reset" value="Reset All" />
-
-    <br />
-    <br />
-
-    <form action="" method="POST">
-      {% csrf_token %} Name:
-      <input type="text" name="name" value="{{section.name}}" /> <br />
-
-      <table
-        id="myTable"
-        style="margin-left: auto; margin-right: auto; border: 1px solid black"
-      >
-        <tr class="header">
-          <th style="width: 5%; margin-left: auto; margin-right: auto">
-            Select
-          </th>
-          <th style="width: 30%; margin-left: auto; margin-right: auto">
-            Name
-          </th>
-          <th style="width: 30%; margin-left: auto; margin-right: auto">
-            Enrollment Number
-          </th>
-          <th style="width: 35%; margin-left: auto; margin-right: auto">
-            Email ID
-          </th>
-        </tr>
-        {% for student in all_students %}
-        <tr>
-          {% if student in students %}
-          <td>
-            <input
-              type="checkbox"
-              name="students"
-              value="{{student.id}}"
-              checked
+        <button
+          class="navbar-toggler position-absolute d-md-none collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#sidebarMenu"
+          aria-controls="sidebarMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <span class="navbar-text ms-auto text-capitalize"
+          >Welcome, {{user.username}}</span
+        >
+        <span class="profile-ava">
+          <a href="{% url 'update_instructor' %}" class="container">
+            <img
+              class="img-thumbnail"
+              src="{{request.user.instructor.profile_pic.url}}"
+              alt=""
+              width="74"
             />
-          </td>
-          {% else %}
-          <td>
-            <input type="checkbox" name="students" value="{{student.id}}" />
-          </td>
-          {% endif %}
-          <td style="text-align: center">{{student.user.username}}</td>
-          <td style="text-align: center">{{student.student_id}}</td>
-          <td style="text-align: center">{{student.user.email}}</td>
-        </tr>
-        {% endfor %}
-      </table>
+          </a>
+        </span>
+      </div>
+    </header>
+    <div class="container">
+      <div class="row">
+        <nav
+          id="sidebarMenu"
+          class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
+        >
+          <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-home"
+                  >
+                    <path
+                      d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+                    ></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                    class="bi bi-people"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"
+                    />
+                  </svg>
+                  Classes
+                </a>
+              </li>
 
-      <input type="submit" value="update" />
-      <script>
-        var year1 = document.querySelector('#year1');
-        var year2 = document.querySelector('#year2');
-        var year3 = document.querySelector('#year3');
-        var year4 = document.querySelector('#year4');
-        var year5 = document.querySelector('#year5');
-        var year6 = document.querySelector('#year6');
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-bar-chart-2"
+                  >
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                  </svg>
+                  Reports
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-layers"
+                  >
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                  </svg>
+                  Assignments
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'password_change' %}">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                    class="bi bi-shield-lock"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"
+                    />
+                    <path
+                      d="M9.5 6.5a1.5 1.5 0 0 1-1 1.415l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99a1.5 1.5 0 1 1 2-1.415z"
+                    />
+                  </svg>
+                  Change Password
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                    class="bi bi-box-arrow-right"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
+                    />
+                  </svg>
+                  Log Out
+                </a>
+              </li>
+            </ul>
 
-        var cse = document.querySelector('#cse');
-        var ece = document.querySelector('#ece');
-        var eee = document.querySelector('#eee');
+            <h6
+              class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
+            >
+              <span>Saved reports</span>
+              <a class="link-secondary" href="#" aria-label="Add a new report">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-plus-circle"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="16"></line>
+                  <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+              </a>
+            </h6>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-file-text"
+                  >
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    ></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  Current month
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-file-text"
+                  >
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    ></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  Last quarter
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">            
+          <div class="">
+        <h1 class="my-2 py-2">{{class_name.name}} : {{section.name}} Batch</h1>
+        
 
-        var btech = document.querySelector('#btech');
-        var mtech = document.querySelector('#mtech');
-        var phd = document.querySelector('#phd');
+        <ul class="list-group w-50">
+          {% for student in students %}
+          <li class="list-group-item">{{student.user.first_name}} {{student.user.last_name}}</li>
+          {% endfor %}
+        </ul>
+        <hr />
+        <h3>Assignments Sent</h3>
+        <ul class="list-group w-50">
+          {% for assignment in sent_assignments %}
+          <li class="list-group-item">
+            <a href="{% url 'view_assignment' assignment.assignment.id %}"
+              >{{assignment.assignment.title}}</a
+            >
+            <div class="d-inline">
+            <form action="{% url 'send_mail' %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="sectionId" value="{{section.id}}">
+              <input type="hidden" name="assignmentId" value="{{assignment.assignment.id}}">
+              <button type="submit" class="btn btn-outline-dark ">Send Email</button>
+            </form>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        <br />
+        <hr />
+        <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Section Update</button>
+      </div>
+      </div>
+      </main>
+      
+      
 
-        var reset = document.querySelector('#reset');
-        reset.addEventListener('click', function () {
-          //console.log(document.getElementById("year1").checked);
-          document.getElementById('year1').checked = false;
-          document.getElementById('year2').checked = false;
-          document.getElementById('year3').checked = false;
-          document.getElementById('year4').checked = false;
-          document.getElementById('year5').checked = false;
-          document.getElementById('year6').checked = false;
+      <div class="container pt-4 my-md-5 pt-md-5 border-top">
+        <footer class="">
+          <div class="row">
+            <div class="col-12 text-center">
+              TECHNOPRENEURES
+              <small class="d-block mb-3 text-muted"
+                >©
+                <script>
+                  document.write(new Date().getFullYear());
+                </script></small
+              >
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
 
-          document.getElementById('cse').checked = false;
-          document.getElementById('ece').checked = false;
-          document.getElementById('eee').checked = false;
+  <!-- Modal -->
+  <div class="modal fade modal-dialog-scrollable" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Section</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        
 
-          document.getElementById('btech').checked = false;
-          document.getElementById('mtech').checked = false;
-          document.getElementById('phd').checked = false;
-          table = document.getElementById('myTable');
-          var tr = table.getElementsByTagName('tr');
-          for (var i = 0; i < tr.length; i++) {
-            tr[i].style.display = '';
-          }
+      <h4>Filter Students</h4>
+      <input
+        type="text"
+        id="myInput"
+        onkeyup="myFunction()"
+        placeholder="Search for names.."
+      />
+      <br>
+      <label for="year"> <strong>By Year</strong> </label><br />
+      <input type="checkbox" id="year1" name="year1" value="year1" />
+      <label for="year1">1</label>
+      <input type="checkbox" id="year2" name="year2" value="year2" />
+      <label for="year2">2</label>
+      <input type="checkbox" id="year3" name="year3" value="year3" />
+      <label for="year3">3</label>
+      <input type="checkbox" id="year4" name="year4" value="year4" />
+      <label for="year4">4</label>
+      <input type="checkbox" id="year5" name="year5" value="year5" />
+      <label for="year5">5</label>
+      <input type="checkbox" id="year6" name="year6" value="year6" />
+      <label for="year6">6</label>
+      <br />
+      <label for="department"> <strong>By Department</strong></label
+      ><br />
+      <input type="checkbox" id="cse" name="cse" value="cse" />
+      <label for="cse">Computer Science and Engineering</label>
+      <input type="checkbox" id="ece" name="ece" value="ece" />
+      <label for="ece">Electronics and Communication Engineering</label>
+      <input type="checkbox" id="eee" name="eee" value="eee" />
+      <label for="eee">Electrical and Electronics Engineering</label>
 
-          //console.log(document.getElementById("year1").checked);
-        });
+      <br />
 
-        year1.addEventListener('change', function () {
-          var input = 1;
-          var x = new Date();
-          var mon = x.getMonth();
-          var year = x.getFullYear();
-          year = year - 2000;
-          var filter = year - 1;
-          if (mon > 6) {
-            filter += 1;
-          }
-          if (this.checked) {
-            myyearFunction(filter, 1);
-          } else {
-            // Checkbox is not checked..
-            myyearFunction(filter, 0);
-          }
-        });
+      <label for="degree"> <strong>By Degree</strong></label
+      ><br />
+      <input type="checkbox" id="btech" name="btech" value="btech" />
+      <label for="btech">B.Tech</label>
+      <input type="checkbox" id="mtech" name="mtech" value="mtech" />
+      <label for="mtech">M.Tech</label>
+      <input type="checkbox" id="phd" name="phd" value="phd" />
+      <label for="btech">Phd</label> <br />
+      <input type="button" id="reset" name="reset" value="Reset All" />
 
-        year2.addEventListener('change', function () {
-          var input = 1;
-          var x = new Date();
-          var mon = x.getMonth();
-          var year = x.getFullYear();
-          year = year - 2000;
-          var filter = year - 2;
-          if (mon > 6) {
-            filter += 1;
-          }
-          if (this.checked) {
-            myyearFunction(filter, 1);
-          } else {
-            // Checkbox is not checked..
-            myyearFunction(filter, 0);
-          }
-        });
+      <br />
+      <br />
 
-        year3.addEventListener('change', function () {
-          var input = 1;
-          var x = new Date();
-          var mon = x.getMonth();
-          var year = x.getFullYear();
-          year = year - 2000;
-          var filter = year - 3;
-          if (mon > 6) {
-            filter += 1;
-          }
-          if (this.checked) {
-            myyearFunction(filter, 1);
-          } else {
-            // Checkbox is not checked..
-            myyearFunction(filter, 0);
-          }
-        });
+      <form action="" method="POST">
+        {% csrf_token %} Name:
+        <input type="text" name="name" value="{{section.name}}" /> <br />
 
-        year4.addEventListener('change', function () {
-          var input = 1;
-          var x = new Date();
-          var mon = x.getMonth();
-          var year = x.getFullYear();
-          year = year - 2000;
-          var filter = year - 4;
-          if (mon > 6) {
-            filter += 1;
-          }
-          if (this.checked) {
-            myyearFunction(filter, 1);
-          } else {
-            // Checkbox is not checked..
-            myyearFunction(filter, 0);
-          }
-        });
+        <table
+          id="myTable"
+          style="margin-left: auto; margin-right: auto; border: 1px solid black"
+        >
+          <tr class="header">
+            <th style="width: 5%; margin-left: auto; margin-right: auto">
+              Select
+            </th>
+            <th style="width: 30%; margin-left: auto; margin-right: auto">
+              Name
+            </th>
+            <th style="width: 30%; margin-left: auto; margin-right: auto">
+              Enrollment Number
+            </th>
+            <th style="width: 35%; margin-left: auto; margin-right: auto">
+              Email ID
+            </th>
+          </tr>
+          {% for student in all_students %}
+          <tr>
+            {% if student in students %}
+            <td>
+              <input
+                type="checkbox"
+                name="students"
+                value="{{student.id}}"
+                checked
+              />
+            </td>
+            {% else %}
+            <td>
+              <input type="checkbox" name="students" value="{{student.id}}" />
+            </td>
+            {% endif %}
+            <td style="text-align: center">{{student.user.username}}</td>
+            <td style="text-align: center">{{student.student_id}}</td>
+            <td style="text-align: center">{{student.user.email}}</td>
+          </tr>
+          {% endfor %}
+        </table>
 
-        year5.addEventListener('change', function () {
-          var input = 1;
-          var x = new Date();
-          var mon = x.getMonth();
-          var year = x.getFullYear();
-          year = year - 2000;
-          var filter = year - 5;
-          if (mon > 6) {
-            filter += 1;
-          }
-          if (this.checked) {
-            myyearFunction(filter, 1);
-          } else {
-            // Checkbox is not checked..
-            myyearFunction(filter, 0);
-          }
-        });
+        
+        <script>
+          var year1 = document.querySelector('#year1');
+          var year2 = document.querySelector('#year2');
+          var year3 = document.querySelector('#year3');
+          var year4 = document.querySelector('#year4');
+          var year5 = document.querySelector('#year5');
+          var year6 = document.querySelector('#year6');
 
-        year6.addEventListener('change', function () {
-          var input = 1;
-          var x = new Date();
-          var mon = x.getMonth();
-          var year = x.getFullYear();
-          year = year - 2000;
-          var filter = year - 6;
-          if (mon > 6) {
-            filter += 1;
-          }
-          if (this.checked) {
-            myyearFunction(filter, 1);
-          } else {
-            // Checkbox is not checked..
-            myyearFunction(filter, 0);
-          }
-        });
+          var cse = document.querySelector('#cse');
+          var ece = document.querySelector('#ece');
+          var eee = document.querySelector('#eee');
 
-        cse.addEventListener('change', function () {
-          var filter = 'CSE';
-          if (this.checked) {
-            myyearFunction(filter, 1);
-          } else {
-            // Checkbox is not checked..
-            myyearFunction(filter, 0);
-          }
-        });
+          var btech = document.querySelector('#btech');
+          var mtech = document.querySelector('#mtech');
+          var phd = document.querySelector('#phd');
 
-        ece.addEventListener('change', function () {
-          var filter = 'ECE';
-          if (this.checked) {
-            myyearFunction(filter, 1);
-          } else {
-            // Checkbox is not checked..
-            myyearFunction(filter, 0);
-          }
-        });
+          var reset = document.querySelector('#reset');
+          reset.addEventListener('click', function () {
+            //console.log(document.getElementById("year1").checked);
+            document.getElementById('year1').checked = false;
+            document.getElementById('year2').checked = false;
+            document.getElementById('year3').checked = false;
+            document.getElementById('year4').checked = false;
+            document.getElementById('year5').checked = false;
+            document.getElementById('year6').checked = false;
 
-        eee.addEventListener('change', function () {
-          var filter = 'EEE';
-          if (this.checked) {
-            myyearFunction(filter, 1);
-          } else {
-            // Checkbox is not checked..
-            myyearFunction(filter, 0);
-          }
-        });
+            document.getElementById('cse').checked = false;
+            document.getElementById('ece').checked = false;
+            document.getElementById('eee').checked = false;
 
-        btech.addEventListener('change', function () {
-          var filter = 'BT';
-          if (this.checked) {
-            myyearFunction(filter, 1);
-          } else {
-            // Checkbox is not checked..
-            myyearFunction(filter, 0);
-          }
-        });
+            document.getElementById('btech').checked = false;
+            document.getElementById('mtech').checked = false;
+            document.getElementById('phd').checked = false;
+            table = document.getElementById('myTable');
+            var tr = table.getElementsByTagName('tr');
+            for (var i = 0; i < tr.length; i++) {
+              tr[i].style.display = '';
+            }
 
-        mtech.addEventListener('change', function () {
-          var filter = 'MT';
-          if (this.checked) {
-            myyearFunction(filter, 1);
-          } else {
-            // Checkbox is not checked..
-            myyearFunction(filter, 0);
-          }
-        });
+            //console.log(document.getElementById("year1").checked);
+          });
 
-        phd.addEventListener('change', function () {
-          var filter = 'PD';
-          if (this.checked) {
-            myyearFunction(filter, 1);
-          } else {
-            // Checkbox is not checked..
-            myyearFunction(filter, 0);
-          }
-        });
+          year1.addEventListener('change', function () {
+            var input = 1;
+            var x = new Date();
+            var mon = x.getMonth();
+            var year = x.getFullYear();
+            year = year - 2000;
+            var filter = year - 1;
+            if (mon > 6) {
+              filter += 1;
+            }
+            if (this.checked) {
+              myyearFunction(filter, 1);
+            } else {
+              // Checkbox is not checked..
+              myyearFunction(filter, 0);
+            }
+          });
 
-        function myyearFunction(filter, check) {
-          // Declare variables
-          var table, tr, td, i, txtValue;
-          //input = document.getElementById("myInput");
-          //filter = input.value.toUpperCase();
-          table = document.getElementById('myTable');
-          tr = table.getElementsByTagName('tr');
-          // Loop through all table rows, and hide those who don't match the search query
-          if (check == 1) {
-            for (i = 0; i < tr.length; i++) {
-              td = tr[i].getElementsByTagName('td')[2];
-              if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                  if (tr[i].style.display == '') {
-                    tr[i].style.display == '';
-                  } else if (tr[i].style.display == 'none') {
-                    tr[i].style.display == 'none';
+          year2.addEventListener('change', function () {
+            var input = 1;
+            var x = new Date();
+            var mon = x.getMonth();
+            var year = x.getFullYear();
+            year = year - 2000;
+            var filter = year - 2;
+            if (mon > 6) {
+              filter += 1;
+            }
+            if (this.checked) {
+              myyearFunction(filter, 1);
+            } else {
+              // Checkbox is not checked..
+              myyearFunction(filter, 0);
+            }
+          });
+
+          year3.addEventListener('change', function () {
+            var input = 1;
+            var x = new Date();
+            var mon = x.getMonth();
+            var year = x.getFullYear();
+            year = year - 2000;
+            var filter = year - 3;
+            if (mon > 6) {
+              filter += 1;
+            }
+            if (this.checked) {
+              myyearFunction(filter, 1);
+            } else {
+              // Checkbox is not checked..
+              myyearFunction(filter, 0);
+            }
+          });
+
+          year4.addEventListener('change', function () {
+            var input = 1;
+            var x = new Date();
+            var mon = x.getMonth();
+            var year = x.getFullYear();
+            year = year - 2000;
+            var filter = year - 4;
+            if (mon > 6) {
+              filter += 1;
+            }
+            if (this.checked) {
+              myyearFunction(filter, 1);
+            } else {
+              // Checkbox is not checked..
+              myyearFunction(filter, 0);
+            }
+          });
+
+          year5.addEventListener('change', function () {
+            var input = 1;
+            var x = new Date();
+            var mon = x.getMonth();
+            var year = x.getFullYear();
+            year = year - 2000;
+            var filter = year - 5;
+            if (mon > 6) {
+              filter += 1;
+            }
+            if (this.checked) {
+              myyearFunction(filter, 1);
+            } else {
+              // Checkbox is not checked..
+              myyearFunction(filter, 0);
+            }
+          });
+
+          year6.addEventListener('change', function () {
+            var input = 1;
+            var x = new Date();
+            var mon = x.getMonth();
+            var year = x.getFullYear();
+            year = year - 2000;
+            var filter = year - 6;
+            if (mon > 6) {
+              filter += 1;
+            }
+            if (this.checked) {
+              myyearFunction(filter, 1);
+            } else {
+              // Checkbox is not checked..
+              myyearFunction(filter, 0);
+            }
+          });
+
+          cse.addEventListener('change', function () {
+            var filter = 'CSE';
+            if (this.checked) {
+              myyearFunction(filter, 1);
+            } else {
+              // Checkbox is not checked..
+              myyearFunction(filter, 0);
+            }
+          });
+
+          ece.addEventListener('change', function () {
+            var filter = 'ECE';
+            if (this.checked) {
+              myyearFunction(filter, 1);
+            } else {
+              // Checkbox is not checked..
+              myyearFunction(filter, 0);
+            }
+          });
+
+          eee.addEventListener('change', function () {
+            var filter = 'EEE';
+            if (this.checked) {
+              myyearFunction(filter, 1);
+            } else {
+              // Checkbox is not checked..
+              myyearFunction(filter, 0);
+            }
+          });
+
+          btech.addEventListener('change', function () {
+            var filter = 'BT';
+            if (this.checked) {
+              myyearFunction(filter, 1);
+            } else {
+              // Checkbox is not checked..
+              myyearFunction(filter, 0);
+            }
+          });
+
+          mtech.addEventListener('change', function () {
+            var filter = 'MT';
+            if (this.checked) {
+              myyearFunction(filter, 1);
+            } else {
+              // Checkbox is not checked..
+              myyearFunction(filter, 0);
+            }
+          });
+
+          phd.addEventListener('change', function () {
+            var filter = 'PD';
+            if (this.checked) {
+              myyearFunction(filter, 1);
+            } else {
+              // Checkbox is not checked..
+              myyearFunction(filter, 0);
+            }
+          });
+
+          function myyearFunction(filter, check) {
+            // Declare variables
+            var table, tr, td, i, txtValue;
+            //input = document.getElementById("myInput");
+            //filter = input.value.toUpperCase();
+            table = document.getElementById('myTable');
+            tr = table.getElementsByTagName('tr');
+            // Loop through all table rows, and hide those who don't match the search query
+            if (check == 1) {
+              for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName('td')[2];
+                if (td) {
+                  txtValue = td.textContent || td.innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    if (tr[i].style.display == '') {
+                      tr[i].style.display == '';
+                    } else if (tr[i].style.display == 'none') {
+                      tr[i].style.display == 'none';
+                    }
+                  } else {
+                    tr[i].style.display = 'none';
                   }
-                } else {
-                  tr[i].style.display = 'none';
+                }
+              }
+            } else if (check == 0) {
+              for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName('td')[1];
+                if (td) {
+                  txtValue = td.textContent || td.innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    if (tr[i].style.display == '') {
+                      tr[i].style.display == 'none';
+                    } else if (tr[i].style.display == 'none') {
+                      tr[i].style.display == '';
+                    }
+                  } else {
+                    tr[i].style.display = '';
+                  }
                 }
               }
             }
-          } else if (check == 0) {
+          }
+
+          function myFunction() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById('myInput');
+            filter = input.value.toUpperCase();
+            table = document.getElementById('myTable');
+            tr = table.getElementsByTagName('tr');
+
+            // Loop through all table rows, and hide those who don't match the search query
             for (i = 0; i < tr.length; i++) {
               td = tr[i].getElementsByTagName('td')[1];
               if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                  if (tr[i].style.display == '') {
-                    tr[i].style.display == 'none';
-                  } else if (tr[i].style.display == 'none') {
-                    tr[i].style.display == '';
-                  }
-                } else {
                   tr[i].style.display = '';
+                } else {
+                  tr[i].style.display = 'none';
                 }
               }
             }
           }
-        }
-
-        function myFunction() {
-          // Declare variables
-          var input, filter, table, tr, td, i, txtValue;
-          input = document.getElementById('myInput');
-          filter = input.value.toUpperCase();
-          table = document.getElementById('myTable');
-          tr = table.getElementsByTagName('tr');
-
-          // Loop through all table rows, and hide those who don't match the search query
-          for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName('td')[1];
-            if (td) {
-              txtValue = td.textContent || td.innerText;
-              if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = '';
-              } else {
-                tr[i].style.display = 'none';
-              }
-            }
-          }
-        }
-      </script>
-    </form>
-  </body>
+        </script>
+      
+       
+                  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </html>

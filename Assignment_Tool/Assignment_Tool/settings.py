@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'Class',
     'Submission',
     'storages',
+    'Email',
 ]
 
 MIDDLEWARE = [

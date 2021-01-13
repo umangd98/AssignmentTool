@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import login_user, home
-
+from Email.views import send_email
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
@@ -29,6 +29,8 @@ urlpatterns = [
     path('assignment/', include('Assignments.urls')),
     path('class/', include('Class.urls')),
     path('submit_assignment/', include('Submission.urls')),
+    path('send_mail/', send_email, name='send_mail'),
+
 
 
 

@@ -14,5 +14,9 @@
       {% csrf_token %} {{form.as_p}}
       <input type="submit" value="Submit" />
     </form>
+    {% if grade %}
+    <h1>Grade: {{grade.grade}}</h1>
+    <h3>Remark: {{grade.remark}}</h3>
+    {% endif %}
   </body>
 </html>
