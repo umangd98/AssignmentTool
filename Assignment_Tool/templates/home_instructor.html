@@ -60,7 +60,7 @@
       <span class="navbar-text ms-auto text-capitalize">Welcome, {{user.username}}</span>
       <span class="profile-ava">
         <a href="{% url 'update_instructor' %}" class="container">
-          <img class="img-thumbnail" src="{{request.user.instructor.profile_pic.url}}" alt="" width="74">
+          <img class="rounded-circle" src="{{request.user.instructor.profile_pic.url}}" alt="" width="60">
         </a>
       </span>
 

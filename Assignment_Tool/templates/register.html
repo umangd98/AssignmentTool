@@ -7,7 +7,7 @@
     <meta name="description" content="Assignment Tool for VNIT" />
     <meta name="author" content="Akshansh Sharma and Umang Dhandhania" />
     <meta name="generator" content="Hugo 0.79.0" />
-    <title>Register | Assignment Tool</title>
+    <title>{{title}} | Assignment Tool</title>
     <!-- CSS only -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
@@ -86,9 +86,17 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <span class="navbar-text ms-auto text-capitalize">Welcome</span>
         <span class="profile-ava">
-          <a href="http://127.0.0.1:8000/login/" class="container">
+          {% if title == "Update" %}
+            <span class="navbar-text ms-auto text-capitalize">Welcome, {{user.username}}</span>
+            <span class="profile-ava">
+              <a href="{% url 'update_instructor' %}" class="container">
+                <img class="rounded-circle" src="{{request.user.instructor.profile_pic.url}}" alt="" width="60">
+              </a>
+            </span>
+          {% else %}
+            <span class="navbar-text ms-auto text-capitalize">Welcome</span>
+            <a href="http://127.0.0.1:8000/login/" class="container">
             <img
               class="rounded-circle"
               src="https://thumbs.dreamstime.com/b/default-avatar-profile-flat-icon-social-media-user-vector-portrait-unknown-human-image-default-avatar-profile-flat-icon-184330869.jpg"
@@ -96,6 +104,7 @@
               width="50"
             />
           </a>
+          {% endif %}
         </span>
       </div>
     </header>
@@ -105,76 +114,94 @@
           <div class="row justify-content-center">
             <div class="col-8 text-left mt-3">
               <div class="card container p-2 shadow-lg border-light">
-                <h3 class="text-center">Register Instructor Form</h3>
+                {% if title == "Update" %}
+                  <h3 class="text-center">Update Details</h3>
+                {% else %}
+                  <h3 class="text-center">Register as Instructor</h3>
+                {% endif %}
                 <div class="row">
                   <div class="col-md-12">
+                    {% if title == "Update" %}
                       <form action="" method="post" enctype="multipart/form-data">
-                      {% csrf_token %}
-                      <div id="div_id_username" class="form-group"> 
-                        <label for="id_username" class=" requiredField">Username<span class="asteriskField">*</span></label> 
-                        <div class=""> 
-                          <input type="text" name="username" maxlength="150" autofocus="" class="textinput textInput form-control" required="" id="id_username"> 
-                          <small id="hint_id_username" class="form-text text-muted">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small> 
-                        </div> 
-                      </div> 
-                      <div id="div_id_first_name" class="form-group"> 
-                        <label for="id_first_name" class="">First name</label> 
-                        <div class=""> 
-                          <input type="text" name="first_name" maxlength="150" class="textinput textInput form-control" id="id_first_name">
-                        </div> 
-                      </div> 
-                      <div id="div_id_last_name" class="form-group"> 
-                        <label for="id_last_name" class="">Last name</label> 
-                        <div class=""> 
-                          <input type="text" name="last_name" maxlength="150" class="textinput textInput form-control" id="id_last_name"> 
-                        </div> 
-                      </div> 
-                      <div id="div_id_email" class="form-group"> 
-                        <label for="id_email" class="">Email address</label>
-                        <div class=""> 
-                          <input type="email" name="email" maxlength="254" class="emailinput form-control" id="id_email"> 
+                        {% csrf_token %} {{form1|crispy}} <br />
+                        {{form2|crispy}}
+                        <br />
+                        <div class="d-grid gap-2">
+                          <button class="btn btn-success" type="submit">Update</button>
                         </div>
-                      </div> 
-                      <div id="div_id_password1" class="form-group"> 
-                        <label for="id_password1" class=" requiredField">Password<span class="asteriskField">*</span> </label> 
-                        <div class=""> 
-                          <input type="password" name="password1" autocomplete="new-password" class="textinput textInput form-control" required="" id="id_password1"> <small id="hint_id_password1" class="form-text text-muted">
-                          <ul>
-                            <li>Your password can’t be too similar to your other personal information.</li>
-                            <li>Your password must contain at least 8 characters.</li>
-                            <li>Your password can’t be a commonly used password.</li>
-                            <li>Your password can’t be entirely numeric.</li>
-                          </ul></small> 
+                      </form>
+                    {% else %}
+                      <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div id="div_id_username" class="form-group"> 
+                          <label for="id_username" class=" requiredField">Username<span class="asteriskField">*</span></label> 
+                          <div class=""> 
+                            <input type="text" name="username" maxlength="150" autofocus="" class="textinput textInput form-control" required="" id="id_username"> 
+                            <small id="hint_id_username" class="form-text text-muted">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small> 
+                          </div> 
                         </div> 
-                      </div> 
-                      <div id="div_id_password2" class="form-group"> 
-                        <label for="id_password2" class=" requiredField">Password confirmation<span class="asteriskField">*</span> </label> 
-                        <div class=""> 
-                          <input type="password" name="password2" autocomplete="new-password" class="textinput textInput form-control" required="" id="id_password2"> <small id="hint_id_password2" class="form-text text-muted">Enter the same password as before, for verification.</small> 
+                        <div id="div_id_first_name" class="form-group"> 
+                          <label for="id_first_name" class="">First name</label> 
+                          <div class=""> 
+                            <input type="text" name="first_name" maxlength="150" class="textinput textInput form-control" id="id_first_name">
+                          </div> 
                         </div> 
-                      </div>
-                      <br>
-                      <div id="div_id_profile_pic" class="form-group"> 
-                        <label for="id_profile_pic" class="">Profile pic</label>
-                        <div class=""> 
-                          <input type="file" name="profile_pic" accept="image/*" class="clearablefileinput form-control-file" id="id_profile_pic"> 
+                        <div id="div_id_last_name" class="form-group"> 
+                          <label for="id_last_name" class="">Last name</label> 
+                          <div class=""> 
+                            <input type="text" name="last_name" maxlength="150" class="textinput textInput form-control" id="id_last_name"> 
+                          </div> 
                         </div> 
-                      </div> 
-                      <div id="div_id_bio" class="form-group"> 
-                        <label for="id_bio" class="">Bio</label> 
-                        <div class=""> 
-                          <textarea name="bio" cols="40" rows="10" maxlength="500" class="textarea form-control" id="id_bio"></textarea> 
+                        <div id="div_id_email" class="form-group"> 
+                          <label for="id_email" class="">Email address</label>
+                          <div class=""> 
+                            <input type="email" name="email" maxlength="254" class="emailinput form-control" id="id_email"> 
+                          </div>
                         </div> 
-                      </div> 
-                      <div id="div_id_instructor_id" class="form-group">
-                        <label for="id_instructor_id" class=" requiredField">Instructor id<span class="asteriskField">*</span> </label> 
-                        <div class=""> 
-                          <input type="text" name="instructor_id" maxlength="20" class="textinput textInput form-control" required="" id="id_instructor_id"> 
+                        <div id="div_id_password1" class="form-group"> 
+                          <label for="id_password1" class=" requiredField">Password<span class="asteriskField">*</span> </label> 
+                          <div class=""> 
+                            <input type="password" name="password1" autocomplete="new-password" class="textinput textInput form-control" required="" id="id_password1"> <small id="hint_id_password1" class="form-text text-muted">
+                            <ul>
+                              <li>Your password can’t be too similar to your other personal information.</li>
+                              <li>Your password must contain at least 8 characters.</li>
+                              <li>Your password can’t be a commonly used password.</li>
+                              <li>Your password can’t be entirely numeric.</li>
+                            </ul></small> 
+                          </div> 
                         </div> 
-                      </div>
-                      <br>
-                      <button type="submit" class="btn btn-primary">Register</button>
-                    </form>
+                        <div id="div_id_password2" class="form-group"> 
+                          <label for="id_password2" class=" requiredField">Password confirmation<span class="asteriskField">*</span> </label> 
+                          <div class=""> 
+                            <input type="password" name="password2" autocomplete="new-password" class="textinput textInput form-control" required="" id="id_password2"> <small id="hint_id_password2" class="form-text text-muted">Enter the same password as before, for verification.</small> 
+                          </div> 
+                        </div>
+                        <br>
+                        <div id="div_id_profile_pic" class="form-group"> 
+                          <label for="id_profile_pic" class="">Profile pic</label>
+                          <div class=""> 
+                            <input type="file" name="profile_pic" accept="image/*" class="clearablefileinput form-control-file" id="id_profile_pic"> 
+                          </div> 
+                        </div> 
+                        <div id="div_id_bio" class="form-group"> 
+                          <label for="id_bio" class="">Bio</label> 
+                          <div class=""> 
+                            <textarea name="bio" cols="40" rows="10" maxlength="500" class="textarea form-control" id="id_bio"></textarea> 
+                          </div> 
+                        </div> 
+                        <div id="div_id_instructor_id" class="form-group">
+                          <label for="id_instructor_id" class=" requiredField">Instructor id<span class="asteriskField">*</span> </label> 
+                          <div class=""> 
+                            <input type="text" name="instructor_id" maxlength="20" class="textinput textInput form-control" required="" id="id_instructor_id"> 
+                          </div> 
+                        </div>
+                        <br>
+                        <div class="d-grid gap-2">
+                          <button class="btn btn-primary" type="submit">Register</button>
+                        </div>
+                      </form>
+                    {% endif %}
+                    
                   </div>
                 </div>
               </div>
@@ -194,30 +221,4 @@
         </footer>
       </div>
   </body>
-</html>
-{% comment %} 
-{% block title %}
-  {% if title %}
-    Update
-  {% else %}
-    Register
-  {% endif %}
-{% endblock title %}
-
-{% block body %}
-    {% if title == "Update" %}
-    <h3>User Update Form</h3>
-    {% elif title == "Student" %}
-    <h3>Register Student Form</h3>
-    {% else %}
-    <h3>Register Instructor Form</h3>
-    {% endif %}
-
-    <form action="" method="post" enctype="multipart/form-data">
-      {% csrf_token %} {{form1.as_p}} <br />
-      {{form2.as_p}}
-      <br />
-      <button type="submit">Register</button>
-    </form> 
-{% endblock body %}
-{% endcomment %}
+</html> 
