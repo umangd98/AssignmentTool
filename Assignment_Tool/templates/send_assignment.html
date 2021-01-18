@@ -285,14 +285,7 @@
 
           <form action="" method="POST">
             {% csrf_token %}
-            <select name="section" required>
-              <option id="myOption" value selected>Select a Section</option>
-              {% for section in sections %}
-              <option id="myList" value="{{section.id}}">
-                {{section.name}} {{section.class_name.name}}
-              </option>
-              {% endfor %}
-            </select>
+            
             <br>
             <br>
             <table id="myTable" style="border: 1px solid black">

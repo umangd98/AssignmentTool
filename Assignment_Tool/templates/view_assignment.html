@@ -102,6 +102,7 @@
       <span class="navbar-text ms-auto text-capitalize"
         >Welcome, {{user.username}}</span
       >
+      {% if is_instructor %}
       <span class="profile-ava">
         <a href="{% url 'update_instructor' %}" class="container">
           <img
@@ -112,6 +113,19 @@
           />
         </a>
       </span>
+      {% else %}
+      <span class="profile-ava">
+        <a href="{% url 'update_student' %}" class="container">
+          <img
+            class="img-thumbnail"
+            src="{{request.user.student.profile_pic.url}}"
+            alt=""
+            width="74"
+          />
+        </a>
+      </span>
+      {% endif %}
+      
     </div>
   </header>
   <body>

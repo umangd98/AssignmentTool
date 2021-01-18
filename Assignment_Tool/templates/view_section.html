@@ -303,30 +303,62 @@
         <h1 class="my-2 py-2">{{class_name.name}} : {{section.name}} Batch</h1>
         
 
-        <ul class="list-group w-50">
-          {% for student in students %}
-          <li class="list-group-item">{{student.user.first_name}} {{student.user.last_name}}</li>
-          {% endfor %}
-        </ul>
+        
+
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Roll #</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            {% for student in students  %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{student.user.first_name}} {{student.user.last_name}}</td>
+              <td>{{student.student_id}}</td>
+              
+            </tr>
+            {% endfor %}
+            
+          </tbody>
+        </table>
+
+
         <hr />
         <h3>Assignments Sent</h3>
-        <ul class="list-group w-50">
-          {% for assignment in sent_assignments %}
-          <li class="list-group-item">
-            <a href="{% url 'view_assignment' assignment.assignment.id %}"
+        
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Assignment</th>
+              <th scope="col">Modified At</th>
+              <th scope="col">Send Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for assignment in sent_assignments  %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td><a href="{% url 'view_assignment' assignment.assignment.id %}"
               >{{assignment.assignment.title}}</a
-            >
-            <div class="d-inline">
-            <form action="{% url 'send_mail' %}" method="POST">
+            ></td>
+              <td>{{assignment.assignment.last_modified}}</td>
+              <td><form action="{% url 'send_mail' %}" method="POST">
               {% csrf_token %}
               <input type="hidden" name="sectionId" value="{{section.id}}">
               <input type="hidden" name="assignmentId" value="{{assignment.assignment.id}}">
               <button type="submit" class="btn btn-outline-dark ">Send Email</button>
-            </form>
-            </div>
-          </li>
-          {% endfor %}
-        </ul>
+            </form></td>
+            </tr>
+            {% endfor %}
+            
+          </tbody>
+        </table>
         <br />
         <hr />
         <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Section Update</button>
