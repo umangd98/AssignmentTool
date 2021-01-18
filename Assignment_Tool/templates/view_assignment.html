@@ -76,9 +76,7 @@
       border: 1px solid black;
     }
   </style>
-  <header
-    class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1 shadow"
-  >
+  <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1 shadow">
     <div class="container">
       {% if is_student %}
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://127.0.0.1:8000/student/">
@@ -370,50 +368,85 @@
           
           <hr />
           <h3>Submissions:</h3>
-          <p>Submitted</p>
-          <ul>
-            {% for submitted_assignment in instructor_submissions_submitted %}
-            <li>
-              <p>
-                {{submitted_assignment.student}}
-                <a href="{% url 'view_submission' submitted_assignment.id %}"
-                  >View</a
-                >
-              </p>
-            </li>
-            {% endfor %}
-          </ul>
-          <p>Not Submitted</p>
-          <ul>
-            {% for not_submitted_assignment in instructor_submissions_not_submitted %}
-  
-            <li>{{not_submitted_assignment.student}}</li>
-            {% endfor %}
-          </ul>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="myCheck1" onclick="myFunction1()">
+            <label class="form-check-label" for="flexCheckDefault">
+              Submitted
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="myCheck2" onclick="myFunction2()">
+            <label class="form-check-label" for="flexCheckChecked">
+              Not Submitted
+            </label>
+          </div>
+
+          <table class="table" id="myTable">
+            <thead>
+              <tr>
+                <th scope="col">Student Name</th>
+                <th scope="col">Enrollment Number</th>
+                <th scope="col">Submission</th>
+              </tr>
+            </thead>
+            <tbody>
+              <div id="myDIV1" >
+                {% for submitted_assignment in instructor_submissions_submitted %}
+                  <tr style="display: none">
+                    <td>{{submitted_assignment.student.user.first_name}} {{submitted_assignment.student.user.last_name}}</td>
+                    <td>{{submitted_assignment.student.student_id}}</td>
+                    <td>
+                      <a href="{% url 'view_submission' submitted_assignment.id %}">
+                        <button class="btn btn-outline-primary btn-sm">View</button>
+                      </a>
+                    </td>        
+                  </tr>
+                {% endfor %}
+              </div>
+              <div id="myDIV2" >
+                {% for not_submitted_assignment in instructor_submissions_not_submitted %}
+                  <tr style="display: none">
+                    <td>{{not_submitted_assignment.student.user.first_name}} {{not_submitted_assignment.student.user.last_name}}</td>
+                    <td>{{not_submitted_assignment.student.student_id}}</td>
+                    <td>
+                      Not Submitted yet
+                    </td>        
+                  </tr>
+                {% endfor %}
+              </div>
+            </tbody>
+          </table>
           {% endif %}
+
+
+
           <br />
           {% if is_student %}
           <br />
           {% if not student_submitted %}
-          <h3>Submission Form</h3>
-          <a href="{% url 'submit_assignment' assignment.id %}">
-            <button>Submit Here</button>
-          </a>
+              <h3>Submission Form</h3>
+              <a href="{% url 'submit_assignment' assignment.id %}">
+                <button>Submit Here</button>
+              </a>
           <br />
           {% else %}
           <h3>Submission</h3>
-          <a href="{{submission.submission_file.url}}">
-            {{submission.submission_file.name}}
-          </a>
-          <a href="{% url 'submit_assignment' assignment.id %}">
-            <button>View</button>
-          </a>
-          <br />
+              <a href="{{submission.submission_file.url}}">
+                {{submission.submission_file.name}}
+              </a>
+              <a href="{% url 'submit_assignment' assignment.id %}">
+                <button>View</button>
+              </a>
+              <br />
+            </div>
           {% endif %} {% endif %}
         
         </main>
       </div>
     </div>
+    
+
+
       
 
     <div class="container pt-4 my-md-5 pt-md-5 border-top">
@@ -431,6 +464,61 @@
         </div>
       </footer>
     </div>
+    <script>
+      var check1 = document.querySelector('#myCheck1');
+      var check2 = document.querySelector('#myCheck2');
+      function myFunction2() 
+      {
+        /// Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        //input = document.getElementById('myInput');
+        input = "Not Submitted yet";
+        filter = input.toUpperCase();
+        table = document.getElementById('myTable');
+        tr = table.getElementsByTagName('tr');
+        var checkBox = document.getElementById("myCheck2");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[2];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1 && checkBox.checked == true) 
+            {
+              tr[i].style.display = '';
+            } else if(checkBox.checked != true){
+              tr[i].style.display = 'none';
+            }
+          }
+        }
+      }
+
+      function myFunction1()
+      {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        //input = document.getElementById('myInput');
+        input = "view";
+        filter = input.toUpperCase();
+        table = document.getElementById('myTable');
+        tr = table.getElementsByTagName('tr');
+        var checkBox = document.getElementById("myCheck1");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[2];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1 && checkBox.checked == true) {
+              tr[i].style.display = '';
+            } else if(checkBox.checked != true){
+              tr[i].style.display = 'none';
+            }
+          }
+        }
+      }
+    </script>
+
   </body>
 </html>
 
