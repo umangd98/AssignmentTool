@@ -326,7 +326,9 @@
           </div>
         </nav>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <h2 class="text my-2">{{assignment.title}}</h2>
+          <div class="row">
+          <div class="col-md-5">
+             <h2 class="text my-2">{{assignment.title}}</h2>
           <p>Created: {{assignment.created}}</p>
           <h4>Teacher: {{assignment.instructor.user.username}}</h4>
           <p>Deadline: <strong>{{assignment.deadline}}</strong></p>
@@ -344,11 +346,12 @@
             <a href="{% url 'update_assignment' assignment.id %}">
               <button class="btn btn-success">Update</button>
             </a>
-          <hr />
-          <div class="d-flex align-items-start">
-            <h3 class="px-3">Sections Sent</h3>
+          </div>
+          <div class="col-md-7 my-2">
+            <div class="d-flex align-items-start">
+            <h3 class="p-3">Sections Sent</h3>
             <a href="{% url 'send_assignment' assignment.id %}">
-              <button class="btn btn-secondary">Send Now</button>
+              <button class="btn btn-secondary m-3">Send Now</button>
             </a>
           </div>
           <ul class="list-group w-50">
@@ -360,6 +363,11 @@
             </li>
             {% endfor %}
           </ul>
+          </div>
+          </div>
+         
+          <hr />
+          
           <hr />
           <h3>Submissions:</h3>
           <p>Submitted</p>
