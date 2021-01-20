@@ -97,9 +97,11 @@
                     {% csrf_token %} 
                     {{form1|crispy}}
                     <br />
-                    <div class="">
-                    <button type="submit" class="btn btn-success btn-lg btn-block">Create</button>
-                    </div>
+                    <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="submit">
+                      Save
+                    </button>
+                  </div>
                   </form>
     
                 </div>
@@ -115,6 +117,9 @@
         $('#id_deadline').datetimepicker({
           format: 'Y-m-d H:i',
         });
+        $('#id_deadline').attr(
+          "autocomplete", "off"
+        );
       });
     </script>
   </body>
