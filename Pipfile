@@ -12,6 +12,7 @@ django-storages = "*"
 boto3 = "*"
 mysqlclient = "*"
 django-crispy-forms = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"

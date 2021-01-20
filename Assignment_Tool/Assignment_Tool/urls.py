@@ -29,6 +29,7 @@ urlpatterns = [
     path('assignment/', include('Assignments.urls')),
     path('class/', include('Class.urls')),
     path('submit_assignment/', include('Submission.urls')),
+    path('ide/', include('Compiler.urls')),
     path('send_mail/', send_email, name='send_mail'),
 
 
