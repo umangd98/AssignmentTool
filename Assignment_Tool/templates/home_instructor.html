@@ -51,22 +51,23 @@
       border: 1px solid black;
     }
   </style>
-  <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1 shadow">
-    <div class="container">
-      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://127.0.0.1:8000/instructor/">Assignment Tool</a>
-      <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <span class="navbar-text ms-auto text-capitalize">Welcome, {{user.username}}</span>
-      <span class="profile-ava">
-        <a href="{% url 'update_instructor' %}" class="container">
-          <img class="rounded-circle" src="{{request.user.instructor.profile_pic.url}}" alt="" width="60">
-        </a>
-      </span>
-
-    </div>
-  </header>
+  
   <body>
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1 shadow">
+      <div class="container">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://127.0.0.1:8000/instructor/">Assignment Tool</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <span class="navbar-text ms-auto text-capitalize">Welcome, {{user.username}}</span>
+        <span class="profile-ava">
+          <a href="{% url 'update_instructor' %}" class="container">
+            <img class="rounded-circle" src="{{request.user.instructor.profile_pic.url}}" alt="" width="60">
+          </a>
+        </span>
+
+      </div>
+    </header>
     <div class="container">
       <div class="row">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -185,47 +186,6 @@
       </div>
     </div>
 
-      <!--<div>
-        {% if user.is_authenticated %}
-        {% if request.user.instructor.profile_pic %}
-        <img class="rounded float-left" width="200" src="{{request.user.instructor.profile_pic.url}}" class="container">
-        <h3 class="container"><p class="text-capitalize">Welcome {{user.username}}</p></h1>
-        {% endif %}
-        <p>{{user.instructor.bio}}</p>
-        <p><a href="{% url 'logout' %}" class="container">Logout</a></p>
-        <p><a href="{% url 'password_change' %}" class="container">Change Password</a></p>
-        <a href="{% url 'update_instructor' %}" class="container"><button>Update Profile</button></a>
-        {% endif %}
-        <button><a href="{% url 'create_assignment' %}">Create Assignment</a></button>
-      </div>
-
-      <div>
-        <h3>Assignments</h3>
-        <ul>
-          {% for assignment in assignments %}
-          <li>
-            Name: {{assignment.title}} || Created: {{assignment.created}} ||
-            <a href="{% url 'view_assignment' assignment.id %}">Link</a> ||
-            <a href="{% url 'update_assignment' assignment.id %}">Update</a>
-          </li>
-          {% endfor %}
-        </ul>
-        <br>
-        <h3>Classes</h3>
-      
-        <ul>
-          {% for class in classes %}
-          <li>
-            Name: {{class.name}} Created: {{class.created}}
-            <a href="{% url 'view_class' class.id %}">View</a>
-          </li>
-      
-          {% endfor %}
-          <a href="{% url 'create_class' %}"> Create new Class</a>
-        </ul>
-      </div>
-    </div>
-  </div>-->
   <br><br><br>
   <div class="container pt-4 my-md-5 pt-md-5 border-top">
     <footer class="">

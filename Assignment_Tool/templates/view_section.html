@@ -366,7 +366,7 @@
 
   <!-- Modal -->
   <div class="modal fade modal-dialog-scrollable" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Update Section</h5>
@@ -416,7 +416,7 @@
       <label for="mtech">M.Tech</label>
       <input type="checkbox" id="phd" name="phd" value="phd" />
       <label for="btech">Phd</label> <br />
-      <input type="button" id="reset" name="reset" value="Reset All" />
+      <button class="btn btn-warning" type="button" id="reset" name="reset" value="Reset All" >Reset</button>
 
       <br />
       <br />
@@ -425,21 +425,18 @@
         {% csrf_token %} Name:
         <input type="text" name="name" value="{{section.name}}" /> <br />
 
-        <table
-          id="myTable"
-          style="margin-left: auto; margin-right: auto; border: 1px solid black"
-        >
+        <table class="table table-striped" id="myTable">
           <tr class="header">
-            <th style="width: 5%; margin-left: auto; margin-right: auto">
+            <th style="text-align: center">
               Select
             </th>
-            <th style="width: 30%; margin-left: auto; margin-right: auto">
+            <th style="text-align: center">
               Name
             </th>
-            <th style="width: 30%; margin-left: auto; margin-right: auto">
+            <th  style="text-align: center">
               Enrollment Number
             </th>
-            <th style="width: 35%; margin-left: auto; margin-right: auto">
+            <th style="text-align: center">
               Email ID
             </th>
           </tr>
@@ -459,7 +456,7 @@
               <input type="checkbox" name="students" value="{{student.id}}" />
             </td>
             {% endif %}
-            <td style="text-align: center">{{student.user.username}}</td>
+            <td style="text-align: center">{{student.user.first_name}} {{student.user.last_name}}</td>
             <td style="text-align: center">{{student.student_id}}</td>
             <td style="text-align: center">{{student.user.email}}</td>
           </tr>
