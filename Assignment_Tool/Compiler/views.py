@@ -24,7 +24,7 @@ def run_compiler(request):
     }
     if 'input' in request.POST:
       data['input'] = request.POST['input']
-    print('input : ',data['input'])
+      print('input : ',data['input'])
     
     r = requests.post(RUN_URL, data=data)
     print('result : ',r.json())

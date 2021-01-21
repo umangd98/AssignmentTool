@@ -62,12 +62,7 @@
           font-size: 3.5rem;
         }
       }
-    </style>
 
-    <!-- Custom styles for this template -->
-  </head>
-
-  <style>
     .profile-pic {
       max-width: 200px;
       max-height: 200px;
@@ -75,7 +70,13 @@
       border-radius: 50%;
       border: 1px solid black;
     }
-  </style>
+
+    </style>
+
+    <!-- Custom styles for this template -->
+  </head>
+
+  
   <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1 shadow">
     <div class="container">
       {% if is_student %}
@@ -340,24 +341,56 @@
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
           <div class="row">
           <div class="col-md-5">
-             <h2 class="text my-2">{{assignment.title}}</h2>
-          <p>Created: {{assignment.created}}</p>
-          <h4>Teacher: {{assignment.instructor.user.username}}</h4>
-          <p>Deadline: <strong>{{assignment.deadline}}</strong></p>
-          <h4>Description</h4>
-          <p>{{assignment.description}}</p>
-          {% if assignment.assignment_pdf %}
-            <p>Prog File: <a href="{{assignment.assignment_pdf.url}}">URL</a></p>
-          {% endif %} <br />
-          {% if assignment.input_test_cases %}
-            <p>Input Case: <a href="{{assignment.input_test_cases.url}}">URL</a></p>
-          {% endif %}
-          <p>Last Updated: {{assignment.last_modified}}</p>
-          <a href="{% url 'home' %}"><button class="btn btn-primary">Back</button></a>
-          {% if is_instructor %}
-            <a href="{% url 'update_assignment' assignment.id %}">
-              <button class="btn btn-success">Update</button>
-            </a>
+
+            <div href="{% url 'view_assignment' assignment.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h3 class="mb-1">{{assignment.title}}</h3>
+              </div>
+              <small> By {{assignment.instructor.user.first_name}} {{assignment.instructor.user.last_name}} </small>
+              <small> on {{assignment.created}}</small>
+              <p class="mb-1">{{assignment.description}}</p>
+              <p>Deadline: <strong>{{assignment.deadline}}</strong></p>
+              {% if assignment.assignment_pdf %}
+                <p> 
+                  <a href="{{assignment.assignment_pdf.url}}">
+                    <div class="d-grid gap-2">                      
+                    </div>
+                    <div class="d-grid gap-2">
+                      <button class="btn btn-primary btn-sm" type="button">Detailed Problem</button>                      
+                    </div>
+                  </a>
+                </p>
+              {% endif %}
+              {% if assignment.input_test_cases %}
+                <p>
+                  <a href="{{assignment.input_test_cases.url}}">
+                    <div class="d-grid gap-2">
+                    </div>
+                    <div class="d-grid gap-2">
+                      <button class="btn btn-outline-primary btn-sm" type="button">Inputs</button>                      
+                    </div>
+                  </a>
+                </p>
+              {% endif %}
+              {% if assignment.output_test_cases %}
+                <p>
+                  <a href="{{assignment.output_test_cases.url}}">
+                    <div class="d-grid gap-2">
+                    </div>
+                    <div class="d-grid gap-2">
+                      <button class="btn btn-outline-success btn-sm" type="button">Outputs</button>
+                      
+                    </div>
+                  </a>
+                </p>
+              {% endif %}
+              <p>Last Updated: {{assignment.last_modified}}</p>
+              <a href="{% url 'home' %}"><button class="btn btn-primary">Back</button></a>
+              {% if is_instructor %}
+                <a href="{% url 'update_assignment' assignment.id %}">
+                <button class="btn btn-success">Update</button>
+              </a>
+            </div>            
           </div>
           <div class="col-md-7 my-2">
             <div class="d-flex align-items-start">
@@ -381,16 +414,22 @@
           <hr />
           
           <hr />
-          <h3>Submissions:</h3>
+          <h4>Submissions</h4>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="myCheck1" onclick="myFunction1()">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onclick="myFunction()">
+            <label class="form-check-label" for="flexRadioDefault1">
+              All
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="myCheck1" onclick="myFunction1()">
+            <label class="form-check-label" for="flexRadioDefault2">
               Submitted
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="myCheck2" onclick="myFunction2()">
-            <label class="form-check-label" for="flexCheckChecked">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="myCheck2" onclick="myFunction2()">
+            <label class="form-check-label" for="flexRadioDefault2">
               Not Submitted
             </label>
           </div>
@@ -479,8 +518,35 @@
       </footer>
     </div>
     <script>
-      var check1 = document.querySelector('#myCheck1');
-      var check2 = document.querySelector('#myCheck2');
+      function myFunction() 
+      {
+        /// Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        //input = document.getElementById('myInput');
+        input = "Not Submitted yet";
+        filter = input.toUpperCase();
+        table = document.getElementById('myTable');
+        tr = table.getElementsByTagName('tr');
+        var checkBox = document.getElementById("myCheck2");
+
+        for (i = 0; i < tr.length; i++) {
+          tr[i].style.display = '';
+        }
+
+        // Loop through all table rows, and hide those who don't match the search query
+        // for (i = 0; i < tr.length; i++) {
+        //   td = tr[i].getElementsByTagName('td')[2];
+        //   if (td) {
+        //     txtValue = td.textContent || td.innerText;
+        //     if (txtValue.toUpperCase().indexOf(filter) > -1 && checkBox.checked == true) 
+        //     {
+        //       tr[i].style.display = '';
+        //     } else if(checkBox.checked != true){
+        //       tr[i].style.display = 'none';
+        //     }
+        //   }
+        // }
+      }
       function myFunction2() 
       {
         /// Declare variables
@@ -497,10 +563,11 @@
           td = tr[i].getElementsByTagName('td')[2];
           if (td) {
             txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1 && checkBox.checked == true) 
+            if (txtValue.toUpperCase().indexOf(filter) > -1) 
             {
               tr[i].style.display = '';
-            } else if(checkBox.checked != true){
+            } else 
+            {
               tr[i].style.display = 'none';
             }
           }
@@ -517,15 +584,17 @@
         table = document.getElementById('myTable');
         tr = table.getElementsByTagName('tr');
         var checkBox = document.getElementById("myCheck1");
+        //var checkBox = document.getElementById("myCheck2");
 
         // Loop through all table rows, and hide those who don't match the search query
         for (i = 0; i < tr.length; i++) {
           td = tr[i].getElementsByTagName('td')[2];
           if (td) {
             txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1 && checkBox.checked == true) {
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
               tr[i].style.display = '';
-            } else if(checkBox.checked != true){
+            } else 
+            {
               tr[i].style.display = 'none';
             }
           }
