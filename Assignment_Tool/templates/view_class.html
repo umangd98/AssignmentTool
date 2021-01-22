@@ -133,7 +133,11 @@
 
           <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">            
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h1 class="h2">{{class_name.name}}</h1>
+              <h1 class="h2">{{class_name.name}} 
+                {% for instructor in instructors %}
+                 by  {{instructor.user.first_name}} {{instructor.user.last_name}}
+                {% endfor %}
+              </h1>
               <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
                   <a href="{% url 'create_class' %}">
@@ -143,24 +147,32 @@
                 </div>
               </div>
             </div>
-                <br />
+                
+                
                 <h3>Sections:</h3>
-                {% comment %} <ul>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Section</th>
+                    <th scope="col">Students</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
                   {% for section in sections %}
-                  <li>
-                    {{section.name}}
-                    <a href="{% url 'view_section' class_name.id section.id %}">Link</a>
-                  </li>
+                  
+                  <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td><a href="{% url 'view_section' class_name.id section.id %}">{{section.name}}</a></td>
+                    <td>{{section.students.count}}</td>
+                    <td><a href=""><button class="btn btn-danger">Delete</button></a></td>
+                  </tr>
                   {% endfor %}
-                </ul> {% endcomment %}
+                </tbody>
+              </table>
 
-              {% for section in sections %}
-                <a href="{% url 'view_section' class_name.id section.id %}" class="w-25 list-group-item list-group-item-action flex-column align-items-start">
-                <div class="d-flex w-100 justify-content-between">
-                  <small>{{section.name}}</small> <small>{{section.students.count}}</small>
-                </div>
-                </a>
-              {% endfor %}
+              
               
           </main>
       </div>

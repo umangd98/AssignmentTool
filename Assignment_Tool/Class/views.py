@@ -36,10 +36,13 @@ def view_class(request, id):
       return redirect('/class/'+str(class_name.id))
   sections = class_name.section_set.all()
   form_section = CreateSectionForm()
+  instructors = class_name.instructor_set.all()
+  print(instructors)
   context = {
     'class_name': class_name,
     'sections': sections,
-    'form': form_section
+    'form': form_section,
+    'instructors':instructors
   }
   return render(request, 'view_class.html', context)
 

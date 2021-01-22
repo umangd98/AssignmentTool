@@ -1,4 +1,5 @@
 {% load crispy_forms_tags %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,7 +22,11 @@
       integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
       crossorigin="anonymous"
     ></script>
-
+    <script
+      src="{% static 'js/jquery.min.js' %}"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
     <!-- Favicons -->
     <link
       rel="apple-touch-icon"
@@ -325,19 +330,72 @@
           </div>
         </nav>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <h1>Submission - {{submission.sent_assignment.assignment}}</h1>
-          <h3>Student Details: <strong> {{submission.student.user.first_name}} {{submission.student.user.last_name}}</strong>    ID: <strong>{{submission.student.student_id}}</strong></h2>
-          <p>Submitted On: {{submission.last_modified}}</p>
-          <p>Section: {{submission.sent_assignment.section}}</p>
-          <p><a href="{{submission.submission_file.url}}"><button class="btn btn-primary">View</button></a></p>
-          <hr />
-          <h2>Grade</h2>
-          <form action="" method="POST">
-            {% csrf_token %} {{form|crispy}}
-            <button class="btn btn-primary" type="submit">Grade</button>
-          </form>
+          <h1>Assignment - {{submission.sent_assignment.assignment}}</h1>
+          <div class="row">
+            <div class="col-6">
+              <div class="card">
+                <div class="card-body">
+                  <form action="" method="POST">
+                  {% csrf_token %} {{form|crispy}}
+                  <button class="btn btn-primary" type="submit">Grade</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 mt-3">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{submission.student.user.first_name}} {{submission.student.user.last_name}}</h5>
+                  <h6 class="card-subtitle">{{submission.student.student_id}}</h6>
+                  <p class="card-text">Submitted On: {{submission.last_modified}}</p>
+                  <p class="card-text">Section: {{submission.sent_assignment.section}}</p>
+                  <a href="{{submission.submission_file.url}}" class="card-link"><button class="btn btn-dark">View</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card my-3">
+            <div class="card-body">
+              <h3 class="card-title">Test With Compiler</h3>
+              <div class="card-text">
+                
+                <button class="btn btn-primary" id="run">Check</button>
+                <p id="result"></p>
+                <p id="time"></p>
+                <p id="memory"></p>
+              </div>
+            </div>
+          </div>
         </main> 
     
     
   </body>
+  <script>
+      $(document).ready(function(){
+          $("#run").click(function(){
+		    runCode();
+	    });
+      function runCode(){
+        var token = $(":input[name='csrfmiddlewaretoken']").val();
+        var run_data = {
+				assignment_id: {{submission.sent_assignment.assignment.id}},
+				submission_id: {{submission.id}},
+				csrfmiddlewaretoken:token
+		     };
+        $.ajax({
+        url: "/ide/run_check/",
+        type: "POST",
+        data: run_data,
+        dataType: "json",
+        timeout: 1000000,
+        success: function(response){
+          $("#result").html(response.text)
+          $("#time").html( response.time_used)
+          $("#memory").html(response.memory_used)
+          
+        }
+        });
+      }
+      });
+  </script>
 </html>

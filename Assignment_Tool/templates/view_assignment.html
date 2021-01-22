@@ -339,7 +339,7 @@
           </div>
         </nav>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <div class="row">
+          <div class="row mt-3">
           <div class="col-md-5">
 
             <div href="{% url 'view_assignment' assignment.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -353,7 +353,7 @@
               {% if assignment.assignment_pdf %}
                 <p> 
                   <a href="{{assignment.assignment_pdf.url}}">
-                    <div class="d-grid gap-2">                      
+                    <div class="d-grid gap-2">
                     </div>
                     <div class="d-grid gap-2">
                       <button class="btn btn-primary btn-sm" type="button">Detailed Problem</button>                      
@@ -385,11 +385,13 @@
                 </p>
               {% endif %}
               <p>Last Updated: {{assignment.last_modified}}</p>
+              
               <a href="{% url 'home' %}"><button class="btn btn-primary">Back</button></a>
               {% if is_instructor %}
                 <a href="{% url 'update_assignment' assignment.id %}">
                 <button class="btn btn-success">Update</button>
               </a>
+            
             </div>            
           </div>
           <div class="col-md-7 my-2">
@@ -399,15 +401,28 @@
               <button class="btn btn-secondary m-3">Send Now</button>
             </a>
           </div>
-          <ul class="list-group w-50">
-            {% for section in sent_sections %}
-            <li class="list-group-item">
-              <a href="{% url 'view_section' section.class_name.id section.id %}"
-                >{{section.name}} - {{section.class_name.name}}</a
-              >
-            </li>
+          
+          <table class="table">
+            <thead> 
+              <tr>
+                <th>#</th>
+                <th>Class</th>
+                <th>Section</th>
+                <th>View</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for section in sent_sections %}
+                <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>{{section.class_name.name}}</td>
+                  <td>{{section.name}}</td>
+                  <td><a href="{% url 'view_section' section.class_name.id section.id %}"><button class="btn btn-sm btn-dark">View</button></a></td>
+                </tr>
             {% endfor %}
-          </ul>
+              
+            </tbody>
+          </table>
           </div>
           </div>
          
@@ -415,19 +430,19 @@
           
           <hr />
           <h4>Submissions</h4>
-          <div class="form-check">
+          <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onclick="myFunction()">
             <label class="form-check-label" for="flexRadioDefault1">
               All
             </label>
           </div>
-          <div class="form-check">
+          <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="flexRadioDefault" id="myCheck1" onclick="myFunction1()">
             <label class="form-check-label" for="flexRadioDefault2">
               Submitted
             </label>
           </div>
-          <div class="form-check">
+          <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="flexRadioDefault" id="myCheck2" onclick="myFunction2()">
             <label class="form-check-label" for="flexRadioDefault2">
               Not Submitted
