@@ -30,7 +30,7 @@ def SubmitAssignment(request,id):
     if form.is_valid() and now<=assignment.deadline:
       form.save()
     return redirect('/assignment/'+str(assignment.id))
-  return render(request, 'submit_assignment.html', {'form':form, 'assignment': assignment, 'user': student, "grade": grade})
+  return render(request, 'submit_assignment.html', {'form':form, 'submission': submission,'assignment': assignment, 'user': student, "grade": grade})
 
 def ViewSubmission(request, id):
   submission = Submission.objects.get(id=id)
