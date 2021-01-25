@@ -1,4 +1,5 @@
 {% load crispy_forms_tags %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,6 +21,11 @@
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
       crossorigin="anonymous"
+    ></script>
+    <script
+      src="{% static 'js/jquery.min.js' %}"
+      type="text/javascript"
+      charset="utf-8"
     ></script>
 
     <!-- Favicons -->
@@ -311,19 +317,96 @@
           </div>
         </nav>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <h2 class="text my-2">Submit your code for {{assignment.title}}</h1>
-          <h3>Deadline: <strong>{{assignment.deadline}}</strong></h3>
-          <h4 class="text">Logged In as {{user}}</h4>
-          <form action="" method="POST" enctype="multipart/form-data">
-            {% csrf_token %} {{form|crispy}}
-            <button class="btn btn-success" type="submit" value="Submit">Submit</button>
-          </form>
-          {% if grade %}
-            <h1>Grade: {{grade.grade}}</h1>
-            <h3>Remark: {{grade.remark}}</h3>
-          {% endif %}
+          
+           
+          <div class="row">
+            <div class="col-12">
+              <div class="card my-3">
+                <div class="card-body">
+                  <h2 class="text my-2">Submission for {{assignment.title}}</h1>
+                  <h3>Deadline: <strong>{{assignment.deadline}}</strong></h3>
+                  <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %} {{form|crispy}}
+                    </br>
+                    <button class="btn btn-success btn-sm" type="submit" value="Submit">Submit</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card my-3">
+            <div class="card-body">
+              <div class="card-text">
+                <h3 class="card-title">Test With Compiler</h3>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="run">
+                  Run Code
+                </button>
+                {% if grade %}
+                  <h4>Grade on Current Submission: {{grade.grade}}</h4>
+                  <h5>Remarks: {{grade.remark}}</h5>
+                {% endif %}
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Checking Code with Compiler</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p class="text" id="result"></p>
+                        <p class="text" id="time"></p>
+                        <p class="text" id="memory"></p>
+                        <p class="text" id="input_cases"></p>
+                        <p class="text" id="output_lines"></p>
+                        <p class="text" id="output_cases_lines"></p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>                
+              </div>
+            </div>
+          </div>
         </main>
       </div>
     </div>
+    
+
+  <script>
+      $(document).ready(function(){
+          $("#run").click(function(){
+		    runCode();
+	    });
+      function runCode(){
+        var token = $(":input[name='csrfmiddlewaretoken']").val();
+        var run_data = {
+				assignment_id: {{submission.sent_assignment.assignment.id}},
+				submission_id: {{submission.id}},
+				csrfmiddlewaretoken:token
+		     };
+        $.ajax({
+        url: "/ide/run_check/",
+        type: "POST",
+        data: run_data,
+        dataType: "json",
+        timeout: 1000000,
+        success: function(response){
+          $("#result").html(response.text)
+          $("#time").html( "Time For Execution: "+response.time_used+" seconds")
+          $("#memory").html("Memory: "+response.memory_used+" KB")
+          $("#input_cases").html("Input: "+response.input_cases)
+          $("#output_lines").html("Expected Output: "+response.output_lines)
+          $("#output_cases_lines").html("Your Output: "+response.output_cases_lines)
+          
+        }
+        });
+      }
+      });
+  </script>
   </body>
 </html>

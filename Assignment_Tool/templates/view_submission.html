@@ -82,45 +82,46 @@
       border: 1px solid black;
     }
   </style>
-  <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1 shadow">
-    <div class="container">
-      {% if is_student %}
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://127.0.0.1:8000/student/">
-          Assignment Tool
-        </a>
-      {% else %}
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://127.0.0.1:8000/instructor/">
-          Assignment Tool
-        </a>
-      {% endif %}
 
-      <button
-        class="navbar-toggler position-absolute d-md-none collapsed"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#sidebarMenu"
-        aria-controls="sidebarMenu"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <span class="navbar-text ms-auto text-capitalize"
-        >Welcome, {{user.username}}</span
-      >
-      <span class="profile-ava">
-        <a href="{% url 'update_instructor' %}" class="container">
-          <img
-            class="img-thumbnail"
-            src="{{request.user.instructor.profile_pic.url}}"
-            alt=""
-            width="74"
-          />
-        </a>
-      </span>
-    </div>
-  </header>
   <body>
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1 shadow">
+      <div class="container">
+        {% if is_student %}
+          <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://127.0.0.1:8000/student/">
+            Assignment Tool
+          </a>
+        {% else %}
+          <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://127.0.0.1:8000/instructor/">
+            Assignment Tool
+          </a>
+        {% endif %}
+
+        <button
+          class="navbar-toggler position-absolute d-md-none collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#sidebarMenu"
+          aria-controls="sidebarMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <span class="navbar-text ms-auto text-capitalize"
+          >Welcome, {{user.username}}</span
+        >
+        <span class="profile-ava">
+          <a href="{% url 'update_instructor' %}" class="container">
+            <img
+              class="rounded-circle"
+              src="{{request.user.instructor.profile_pic.url}}"
+              alt=""
+              width="74"
+            />
+          </a>
+        </span>
+      </div>
+    </header>
     <div class="container">
       <div class="row">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -356,13 +357,32 @@
           </div>
           <div class="card my-3">
             <div class="card-body">
-              <h3 class="card-title">Test With Compiler</h3>
               <div class="card-text">
-                
-                <button class="btn btn-primary" id="run">Check</button>
-                <p id="result"></p>
-                <p id="time"></p>
-                <p id="memory"></p>
+                <h3 class="card-title">Test With Compiler</h3>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="run">
+                  Run Code
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Checking Code with Compiler</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="text" id="result">  </div>
+                        <div class="text" id="time"> </div>
+                        <div class="text" id="memory"></div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>                
               </div>
             </div>
           </div>
@@ -390,8 +410,8 @@
         timeout: 1000000,
         success: function(response){
           $("#result").html(response.text)
-          $("#time").html( response.time_used)
-          $("#memory").html(response.memory_used)
+          $("#time").html( "Time For Execution: "+response.time_used+" seconds")
+          $("#memory").html("Memory: "+response.memory_used+" KB")
           
         }
         });

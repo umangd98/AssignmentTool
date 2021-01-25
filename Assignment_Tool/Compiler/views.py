@@ -11,7 +11,13 @@ RUN_URL = "https://api.hackerearth.com/code/run/"
 
 # Create your views here.
 def index_compiler(request):
-  return render(request, 'index_compiler.html', {})
+  group = request.user.groups.all()[0].name
+  is_instructor = False
+  if group == 'instructor':
+    #send form
+    is_instructor=True
+
+  return render(request, 'index_compiler.html', {'is_instructor': is_instructor})
 
 
 def run_compiler(request):
@@ -92,14 +98,16 @@ def run_check(request):
     # print('output ', output_lines)
     
     if output_cases_lines == output_lines:
-      ret = 'Output matched Correctly!'
+      ret = 'Compiler Message: Output matched Correctly!'
       print('matched')
 
         
     res_data = {
       'text': ret,
       'time_used': time_used, 
-      'memory_used': memory_used
-      
+      'memory_used': memory_used,
+      "output_cases_lines": output_cases_lines,
+      "input_cases": input_cases,
+      "output_lines": output_lines      
     }
     return JsonResponse(res_data, safe=False)

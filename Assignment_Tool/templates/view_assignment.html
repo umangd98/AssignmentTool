@@ -1,3 +1,5 @@
+{% load crispy_forms_tags %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,6 +21,12 @@
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
       crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="{% static 'js/jquery.min.js' %}"
+      type="text/javascript"
+      charset="utf-8"
     ></script>
 
     <!-- Favicons -->
@@ -107,7 +115,7 @@
       <span class="profile-ava">
         <a href="{% url 'update_instructor' %}" class="container">
           <img
-            class="img-thumbnail"
+            class="rounded-circle"
             src="{{request.user.instructor.profile_pic.url}}"
             alt=""
             width="74"
@@ -118,7 +126,7 @@
       <span class="profile-ava">
         <a href="{% url 'update_student' %}" class="container">
           <img
-            class="img-thumbnail"
+            class="rounded-circle"
             src="{{request.user.student.profile_pic.url}}"
             alt=""
             width="74"
@@ -362,15 +370,17 @@
                 </p>
               {% endif %}
               {% if assignment.input_test_cases %}
+                {% if is_instructor %}
                 <p>
                   <a href="{{assignment.input_test_cases.url}}">
                     <div class="d-grid gap-2">
                     </div>
                     <div class="d-grid gap-2">
-                      <button class="btn btn-outline-primary btn-sm" type="button">Inputs</button>                      
+                      <button class="btn btn-outline-primary btn-sm disabled" type="button" >Inputs</button>                      
                     </div>
                   </a>
                 </p>
+                {% endif %}
               {% endif %}
               {% if assignment.output_test_cases %}
                 <p>
@@ -391,6 +401,7 @@
                 <a href="{% url 'update_assignment' assignment.id %}">
                 <button class="btn btn-success">Update</button>
               </a>
+              
             
             </div>            
           </div>
@@ -508,6 +519,7 @@
               <br />
             </div>
           {% endif %} {% endif %}
+          
         
         </main>
       </div>
@@ -532,6 +544,7 @@
         </div>
       </footer>
     </div>
+    
     <script>
       function myFunction() 
       {
