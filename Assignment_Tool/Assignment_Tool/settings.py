@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'storages',
     'Email',
     'Compiler',
-    'reports'
+    'Reports',
 ]
 
 MIDDLEWARE = [
