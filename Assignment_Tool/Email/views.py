@@ -38,7 +38,7 @@ def send_email(request):
 def send_email_grades(assignment, user, grade):
   print('sending mail...')
   subject = assignment.title + " " + grade.grade
-  body = 'You have received grade for assignment ' + assignment.title + 'by  ' + str(assignment.instructor.user.get_full_name() )+ 'Remark: ' + grade.remark
+  body = 'You have received grade for assignment ' + assignment.title + 'by  ' + str(assignment.instructor.user.get_full_name() )+ ' Remark: ' + grade.remark
   from_mail = 'technopreneur123@gmail.com'
   retval = send_mail(subject, body, from_mail, (user.email,))
   if retval ==1:

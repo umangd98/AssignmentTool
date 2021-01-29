@@ -19,6 +19,7 @@ from .views import login_user, home
 from Email.views import send_email
 from django.conf import settings
 from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
@@ -31,11 +32,6 @@ urlpatterns = [
     path('submit_assignment/', include('Submission.urls')),
     path('ide/', include('Compiler.urls')),
     path('send_mail/', send_email, name='send_mail'),
-
-
-
-
-    # path('register_instructor/', instructor_register, name='register_instructor')
-
+    path('reports/',include('Reports.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

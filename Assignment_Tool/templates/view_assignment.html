@@ -28,6 +28,7 @@
       type="text/javascript"
       charset="utf-8"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
     <!-- Favicons -->
     <link
@@ -395,6 +396,18 @@
                 </p>
               {% endif %}
               <p>Last Updated: {{assignment.last_modified}}</p>
+              {% if is_instructor %}
+                <p>
+                  <a href="{% url 'reports' assignment.id %}">
+                    <div class="d-grid gap-2">
+                    </div>
+                    <div class="d-grid gap-2">
+                      <button class="btn btn-outline-success btn-sm" type="button">Reports</button>
+                      
+                    </div>
+                  </a>
+                </p>
+              {% endif %}
               
               <a href="{% url 'home' %}"><button class="btn btn-primary">Back</button></a>
               {% if is_instructor %}
@@ -520,8 +533,6 @@
               <br />
             </div>
           {% endif %} {% endif %}
-          
-        
         </main>
       </div>
     </div>
