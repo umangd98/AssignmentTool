@@ -510,11 +510,12 @@
           <br />
           {% else %}
           <h3>Submission</h3>
-              <a href="{{submission.submission_file.url}}">
+              <p>Submitted On: {{submission.submitted}}</p>
+              <!-- <a href="{{submission.submission_file.url}}">
                 {{submission.submission_file.name}}
-              </a>
+              </a> -->
               <a href="{% url 'submit_assignment' assignment.id %}">
-                <button>View</button>
+                <button class="btn btn-primary">View</button>
               </a>
               <br />
             </div>
