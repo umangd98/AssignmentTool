@@ -11,7 +11,8 @@ def login_user(request):
     form = LoginForm(request.POST)
     if form.is_valid():
       cd = form.cleaned_data
-      user = authenticate(request, username=cd['username'], password=cd['password'])
+      # user = authenticate(request, username=cd['username'], password=cd['password'])
+      user = form.login(request)
       if user is not None:
         login(request, user)
         # return HttpResponse('Auth is successful')
@@ -22,8 +23,8 @@ def login_user(request):
           # return render(request, 'home.html', {'bio':user.instructor.bio})
         elif group == 'student':
           return redirect('/student/')
-      else:
-        return HttpResponse('Auth failed. Please check credentials')
+      # else:
+      #   return HttpResponse('Auth failed. Please check credentials')
   
   else:
     form = LoginForm()

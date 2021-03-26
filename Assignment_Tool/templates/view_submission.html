@@ -376,6 +376,9 @@
                         <div class="text" id="result">  </div>
                         <div class="text" id="time"> </div>
                         <div class="text" id="memory"></div>
+                        <div class="text" id="input_cases"></div>
+                        <div class="text" id="output_lines"></div>
+                        <div class="text" id="output_cases_lines"></div>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -412,7 +415,9 @@
           $("#result").html(response.text)
           $("#time").html( "Time For Execution: "+response.time_used+" seconds")
           $("#memory").html("Memory: "+response.memory_used+" KB")
-          
+          $("#input_cases").html("Input: "+response.input_cases)
+          $("#output_lines").html("Expected Output: "+response.output_lines)
+          $("#output_cases_lines").html("Your Output: "+response.output_cases_lines)
         }
         });
       }
